@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from users.forms import UserRegisterForm
 from users.models import Watchlist
 
-movies = pd.read_csv('../movies.csv')
+movies = pd.read_csv('movies.csv')
 pd.set_option('display.max_colwidth', None)
 
 dfList = movies.values.tolist()
@@ -59,7 +59,7 @@ def watchlist(request):
 
 
 def main_page(request):
-    return render(request, 'main_page.html', {'movieList': dfList})
+    return render(request, 'base.html', {'movieList': dfList})
 
 
 def all_movies(request):
