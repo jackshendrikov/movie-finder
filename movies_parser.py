@@ -2,7 +2,6 @@ import json
 import ssl
 import urllib.request
 from movie_finder.settings import OMDB_KEY
-import csv
 
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
