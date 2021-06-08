@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     'rest_framework',
-    'channels',
     'crispy_forms',
+    'users',
+    'movies',
 ]
 
 MIDDLEWARE = [
