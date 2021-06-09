@@ -87,7 +87,7 @@ def advanced_search(request):
         get_keywords = request.GET.get('getKeywords')
         get_genre = request.GET.get('getGenre')
 
-        sorting = request.GET.get('inlineDefaultRadios')
+        sorting = request.GET.get('sorting')
         get_cast = difflib.get_close_matches(get_cast, all_cast)
 
         if len(get_cast) > 0: get_cast = get_cast[0]
