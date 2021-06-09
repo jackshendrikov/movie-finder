@@ -8,10 +8,13 @@ document.querySelector(".grid").addEventListener("click", function () {
     document.querySelector(".movies-wrapper").classList.add("gridView");
     document.querySelector(".movies-wrapper").classList.remove("tableView");
 
-    let arrayOfGenres=document.getElementsByClassName('movie-cell genre');
-    let arrayOfNetflix=document.getElementsByClassName('movie-cell netflix');
-    let arrayOfIMDB=document.getElementsByClassName('movie-cell imdb-num');
-    let arrayOfWatchlist=document.getElementsByClassName('movie-cell watchlist');
+    let arrayOfTitles = document.getElementsByClassName('movie-cell poster');
+    let arrayOfRate = document.getElementsByClassName('movie-cell rating');
+
+    let arrayOfGenres = document.getElementsByClassName('movie-cell genre');
+    let arrayOfNetflix = document.getElementsByClassName('movie-cell netflix');
+    let arrayOfIMDB = document.getElementsByClassName('movie-cell imdb-num');
+    let arrayOfWatchlist = document.getElementsByClassName('movie-cell watchlist');
 
     let lengthOfArray=arrayOfGenres.length;
 
@@ -20,6 +23,9 @@ document.querySelector(".grid").addEventListener("click", function () {
         arrayOfNetflix[i].style.display='none';
         arrayOfIMDB[i].style.display='none';
         arrayOfWatchlist[i].style.display='none';
+
+        arrayOfTitles[i].style.textAlign = "center";
+        arrayOfRate[i].style.textAlign = "center";
     }
 });
 
@@ -29,10 +35,13 @@ document.querySelector(".list").addEventListener("click", function () {
     document.querySelector(".movies-wrapper").classList.remove("gridView");
     document.querySelector(".movies-wrapper").classList.add("tableView");
 
-    let arrayOfGenres=document.getElementsByClassName('movie-cell genre');
-    let arrayOfNetflix=document.getElementsByClassName('movie-cell netflix');
-    let arrayOfIMDB=document.getElementsByClassName('movie-cell imdb-num');
-    let arrayOfWatchlist=document.getElementsByClassName('movie-cell watchlist');
+    let arrayOfTitles = document.getElementsByClassName('movie-cell poster');
+    let arrayOfRate = document.getElementsByClassName('movie-cell rating');
+
+    let arrayOfGenres = document.getElementsByClassName('movie-cell genre');
+    let arrayOfNetflix = document.getElementsByClassName('movie-cell netflix');
+    let arrayOfIMDB = document.getElementsByClassName('movie-cell imdb-num');
+    let arrayOfWatchlist = document.getElementsByClassName('movie-cell watchlist');
 
     let lengthOfArray=arrayOfGenres.length;
 
@@ -41,5 +50,8 @@ document.querySelector(".list").addEventListener("click", function () {
         arrayOfNetflix[i].style.display='flex';
         arrayOfIMDB[i].style.display='flex';
         arrayOfWatchlist[i].style.display='flex';
+
+        arrayOfTitles[i].style.textAlign = "initial";
+        arrayOfRate[i].style.textAlign = "initial";
     }
 });

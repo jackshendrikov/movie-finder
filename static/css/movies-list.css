@@ -258,7 +258,7 @@
 
 .tableView .movie-cell {
     flex: 1;
-    padding: 8px 16px;
+    padding: 14px 16px;
     color: var(--theme-color);
     font-size: 14px;
     display: flex;
@@ -266,7 +266,7 @@
 }
 
 .tableView .movie-cell img {
-    width: 32px;
+    width: 22px;
     height: 32px;
     border-radius: 6px;
     margin-right: 6px;
