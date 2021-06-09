@@ -27,7 +27,7 @@ for imdb_id in new_movies:
                      data["imdbID"] + ',' + data["Title"] + ',' + data["imdbRating"] + ',https://www.imdb.com/title/' +
                      data["imdbID"] + ',' + data["imdbVotes"].replace(',', '') + ',"' + data["Genre"] + '","' +
                      str(data["Actors"].split(',')) + '",' + data["Runtime"].split()[0] + ',' + data["Type"].title() +
-                     ',,"' + data["Plot"] + '","' + ", ".join(keywords['keywords'][:15]) + '",' + data["Year"] + ',' +
-                     data["Poster"])
+                     ',,"' + data["Plot"] + '","' + ", ".join(keywords['keywords'][:15]) + '",' +
+                     data["Year"].split('–')[0] + ',' + data["Poster"])
 
 all_movies.close()
