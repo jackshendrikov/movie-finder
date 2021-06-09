@@ -59,7 +59,7 @@ dfTopList = dfTop.values.tolist()
 
 
 def main_page(request):
-    return render(request, 'base.html', {'movieList': dfList})
+    return render(request, 'main-page.html', {'movieList': dfList})
 
 
 # def all_movies(request):
@@ -97,7 +97,7 @@ def advanced_search(request):
         if not get_year: get_year = 0
         if not get_rating: get_rating = 0.0
 
-        if sorting == 'byyear':
+        if sorting == 'byYear':
             dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
                                   (df_advance['genre'].str.contains(get_genre, na=False)) &
                                   (df_advance['cast'].str.contains(get_cast, na=False)) &
@@ -114,7 +114,7 @@ def advanced_search(request):
         if get_genre == '': get_genre = 'All'
         if get_cast == '': get_cast = 'All'
         if get_keywords == '': get_keywords = 'Any'
-        if sorting == 'byyear': sorting = 'By Year'
+        if sorting == 'byYear': sorting = 'By Year'
         else: sorting = 'By Rating'
 
         return render(request, 'advanced_search.html', {'movieList': dfSelect, 'movieLen': len(dfSelect),
