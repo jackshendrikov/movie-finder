@@ -77,7 +77,6 @@
             IMDb #
         </div>
 
-
         <div class="movie-cell rating">
             Rating
             <button class="sort-button">
@@ -99,8 +98,8 @@
             <span>{{movie.1}}</span>
         </div>
 
-        <div class="movie-cell category"><span class="cell-label">Genre:</span>{{movie.5|truncatechars:16}}</div>
-        <div class="movie-cell status-cell">
+        <div class="movie-cell genre" style="display: none;"><span class="cell-label">Genre:</span>{{movie.5|truncatechars:16}}</div>
+        <div class="movie-cell netflix" style="display: none;">
             <span class="cell-label">Netflix Status:</span>
             {% if movie.9 != "None" %}
             <span class="status active">Available</span>
@@ -108,14 +107,14 @@
             <span class="status disabled">Unavailable</span>
             {% endif %}
         </div>
-        <div class="movie-cell sales"><span class="cell-label">IMDb #:</span>{{movie.0}}</div>
-        <div class="movie-cell stock">
-            <span class="cell-label">Rating:</span>
-            <div>
+        <div class="movie-cell imdb-num" style="display: none;"><span class="cell-label">IMDb #:</span>{{movie.0}}</div>
+        <div class="movie-cell rating">
+{#            <span class="cell-label">Rating:</span>#}
+            <div style="text-align: center; margin: auto; color: var(--content-title-color);">
                 <i class="fa fa-star"></i>&#160;{{movie.2}}
             </div>
         </div>
-        <div class="movie-cell price"><span class="cell-label">Add to Watchlist:</span>Add</div>
+        <div class="movie-cell watchlist" style="display: none;"><span class="cell-label">Add to Watchlist:</span>Add</div>
     </div>
     {% endfor %}
 </div>
