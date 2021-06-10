@@ -100,8 +100,9 @@
 
     {% for movie in movieItems %}
     <div class="movies-row">
-        <form action="" method="POST" class="movie-cell poster" style="text-align: center;">
+        <form action="{% url 'result' %}" method="POST" class="movie-cell poster" style="text-align: center;">
             {% csrf_token %}
+            <input type="hidden" value="{{movie.1}}" name="movie">
             <input type="image" src="{{movie.13}}" alt="movie">
             <span>{{movie.1}}</span>
         </form>

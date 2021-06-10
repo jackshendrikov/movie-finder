@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/movie-info.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class='movie-card'>
+    <div class='movie-card-left'>
+        <img src='{{ poster }}'>
+    </div>
+
+    <div class='movie-card-right'>
+        <h1>{{ title }}</h1>
+        <div class='movie-card-right-details'>
+            <ul>
+                <li>{{ mtype }}</li>
+                <li>{{ year }}</li>
+                <li>{{ runtime }} min</li>
+                <li>{{ genres }}</li>
+            </ul>
+
+            <div class='movie-card-right-rating' title="{{ rating }}%">
+                <div class='back-stars'>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+                    <i class='fa fa-star' aria-hidden="true"></i>
+
+                    <div class='front-stars' style="width: {{ rating }}%">
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                        <i class='fa fa-star' aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class='movie-card-right-review'>
+                <p>{{ plot }}</p>
+                <a href='{{ link }}' target='_blank'>Read more</a>
+            </div>
+
+            {% if netflix != "None" %}
+            <div class='movie-card-right-button'>
+                <a href='{{ netflix }}' target='_blank' >
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                    &nbsp;WATCH ON NETFLIX
+                </a>
+            </div>
+            {% else %}
+            <div class='movie-card-right-button-disable' >
+                <a style="color: #9c9c9c;">
+                    <i class="fa fa-frown-o" aria-hidden="true"></i>
+                    &nbsp;MISSING ON NETFLIX
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% endblock extra_js %}

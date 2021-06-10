@@ -122,7 +122,7 @@ def advanced_search(request):
         if sorting == 'byYear': sorting = 'By Year'
         else: sorting = 'By Rating'
 
-        paginator = Paginator(dfSelect, 10)
+        paginator = Paginator(dfSelect, 15)
 
         try:
             movie_items = paginator.page(page)
@@ -170,44 +170,29 @@ def advanced_search(request):
 #     return render(request, 'genre.html', {'movieList': genre, 'genre_type': genre_type})
 
 #
-# def result_page(request):
-#     movie = request.POST.get('movie', 'False')
-#     search = movies[movies['title'] == movie]
-#
-#     # params
-#     imdb_id = search['imdb_id'].to_string(index=False).strip()
-#     title = search['title'].to_string(index=False).strip()
-#     rating = search['rating'].to_string(index=False).strip()
-#     link = search['link'].to_string(index=False).strip()
-#     votes = search['votes'].to_string(index=False).strip()
-#     genres = search['genre'].to_string(index=False).strip()
-#     genres_split = genres.split(',')
-#     cast = search['cast'].to_string(index=False).strip()
-#     cast_list = cast[2:-2].replace("'", "").split(',')
-#     runtime = search['runtime'].to_string(index=False).strip()
-#     mType = search['type'].to_string(index=False).strip()
-#     netflix = search['netflix'].to_string(index=False).strip()
-#     plot = search['plot'].to_string(index=False).strip()
-#     poster = search['poster'].to_string(index=False).strip()
-#
-#     full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
-#                    'votes': votes, 'genres': genres, 'cast': cast, 'runtime': runtime, 'mtype': mType,
-#                    'netflix': netflix, 'plot': plot, 'poster': poster, 'genres_split': genres_split,
-#                    'cast_list': cast_list}
-#
-#     if movies[movies['imdb_id'] == imdb_id]['netflix'].to_string(index=False).strip() != "NaN":
-#         back = True
-#         soup = BeautifulSoup(requests.get(netflix).text, "html.parser")
-#         raw = soup.find("div", {'class': 'hero-image hero-image-desktop'})
-#         try:
-#             background = raw.get('style')[35:-2]
-#             logo = soup.find("img", {'class': 'logo'}).get('src')
-#             return render(request, "result.html", {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating,
-#                                                    'link': link, 'votes': votes, 'genres': genres, 'cast': cast,
-#                                                    'runtime': runtime, 'mtype': mType, 'netflix': netflix,
-#                                                    'plot': plot, 'poster': poster, 'logo': logo,
-#                                                    'background': background, 'back': back, 'genres_split': genres_split,
-#                                                    'cast_list': cast_list})
-#         except:
-#             return render(request, "result.html", full_result)
-#     return render(request, "result.html", full_result)
+def result_page(request):
+    movie = request.POST.get('movie', 'False')
+    search = movies[movies['title'] == movie]
+
+    imdb_id = search['imdb_id'].to_string(index=False).strip()
+    title = search['title'].to_string(index=False).strip()
+    rating = int(float(search['rating'].to_string(index=False).strip()) * 10)
+    link = search['link'].to_string(index=False).strip()
+    votes = search['votes'].to_string(index=False).strip()
+    genres = search['genre'].to_string(index=False).strip()
+    genres_split = genres.split(',')
+    cast = search['cast'].to_string(index=False).strip()
+    cast_list = cast[2:-2].replace("'", "").split(',')
+    runtime = search['runtime'].to_string(index=False).strip()
+    mType = search['type'].to_string(index=False).strip()
+    netflix = search['netflix'].to_string(index=False).strip()
+    plot = search['plot'].to_string(index=False).strip()
+    poster = search['poster'].to_string(index=False).strip()
+    year = search['year'].to_string(index=False).strip()
+
+    full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
+                   'votes': votes, 'genres': genres, 'cast': cast, 'runtime': runtime, 'mtype': mType,
+                   'netflix': netflix, 'plot': plot, 'poster': poster, 'genres_split': genres_split,
+                   'year': year, 'cast_list': cast_list}
+
+    return render(request, "result.html", full_result)

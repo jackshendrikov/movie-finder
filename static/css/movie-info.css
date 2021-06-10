@@ -1,0 +1,218 @@
+.movie-card {
+    width: 900px;
+    height: 400px;
+    background: var(--main-bg);
+    margin: 30px auto 0;
+    -webkit-border-radius: 10px;
+       -moz-border-radius: 10px;
+            border-radius: 10px;
+    box-shadow: 0 43px 100px rgba(68, 104, 194, 0.18);
+}
+
+@media (max-width: 992px) {
+    .movie-card {
+        width: 100%;
+    }
+}
+
+.movie-card-left {
+    width: 30%;
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    background: transparent;
+}
+
+.movie-card-left img {
+    width: 100%;
+    height: 100%;
+    -webkit-border-radius: 10px 0 0 10px;
+       -moz-border-radius: 10px 0 0 10px;
+            border-radius: 10px 0 0 10px;
+    position: relative;
+}
+
+@media (max-width: 992px) {
+    .movie-card-left {
+        text-align: center;
+        padding: 30px 0 0 0;
+        width: 100%;
+        height: auto;
+    }
+
+    .movie-card-left img {
+        width: auto;
+        height: 300px;
+        -webkit-border-radius: 10px;
+           -moz-border-radius: 10px;
+                border-radius: 10px;
+    }
+}
+
+.movie-card-right {
+    width: 70%;
+    float: left;
+    background: var(--main-bg);
+    height: 400px;
+    -webkit-border-radius: 0 10px 10px 0;
+           -moz-border-radius: 0 10px 10px 0;
+                border-radius: 0 10px 10px 0;
+}
+
+@media (max-width: 992px) {
+    .movie-card-right {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.movie-card-right h1 {
+    color: white;
+    font-weight: 400;
+    text-align: left;
+    font-family: "Montserrat", sans-serif;
+    font-size: 40px;
+    margin: 30px 0 0 0;
+    padding: 0 0 0 40px;
+    letter-spacing: 1px;
+}
+
+.movie-card-right-details ul {
+    list-style-type: none;
+    padding: 0 0 0 40px;
+    margin: 10px 0 0 0;
+}
+
+.movie-card-right-details ul li {
+    display: inline;
+    color: #e3e3e3;
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    padding: 0 40px 0 0;
+}
+
+.front-stars, .back-stars, .movie-card-right-rating {
+  display: flex;
+}
+
+.movie-card-right-rating {
+    align-items: flex-start;
+    font-size: 2em;
+    justify-content: left;
+    right: 160px;
+    margin: 10px 0 15px 35px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.movie-card-right-rating .back-stars {
+    color: #8f7e50;
+    position: relative;
+    text-shadow: 2px 2px 5px #635737;
+}
+
+.back-stars i,
+.front-stars i {
+    margin: 0 3px;
+}
+
+.back-stars i:first-of-type,
+.front-stars i:first-of-type {
+    margin-left: 0;
+}
+
+.back-stars i:last-of-type,
+.front-stars i:last-of-type {
+    margin-right: 0;
+}
+
+@media (max-width: 992px) {
+    .movie-card-right-rating {
+        font-size: 1.8em;
+    }
+    .back-stars i,
+    .front-stars i {
+        margin: 0 1px;
+    }
+}
+
+.movie-card-right-rating .front-stars {
+    color: #FFBC0B;
+    overflow: hidden;
+    position: absolute;
+    text-shadow: 1px 1px 3px #d29b09;
+    top: 0;
+    transition: all 0.5s;
+}
+
+
+.movie-card-right-review p {
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    padding: 0 40px 0 40px;
+    letter-spacing: 1px;
+    margin: 10px 0 10px 0;
+    line-height: 20px;
+}
+
+.movie-card-right-review a {
+    text-decoration: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    padding: 0 0 0 40px;
+    color: #ffda00;
+    margin: 0;
+}
+
+.movie-card-right-button,
+.movie-card-right-button-disable {
+    padding: 0 0 0 40px;
+    margin: 30px auto 0;
+}
+
+
+@media (max-width: 992px) {
+    .movie-card-right-button,
+    .movie-card-right-button-disable {
+        padding: 0;
+        text-align: center;
+        margin: 20px auto 20px;
+    }
+}
+
+.movie-card-right-button a,
+.movie-card-right-button-disable a {
+    text-decoration: none;
+    padding: 10px 15px 10px 15px;
+    margin: auto;
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    background-size: 12px 12px;
+    border-radius: 5px;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+.movie-card-right-button a {
+    color: #e50914;
+    border: 2px solid #e50914;
+}
+
+.movie-card-right-button-disable a {
+    color: #9c9c9c;
+    border: 2px solid #9c9c9c;
+}
+
+.movie-card-right-button a:hover {
+    color: #ffffff;
+    background-color: #e50914;
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+    background-position: 10% 50%;
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
