@@ -26,6 +26,7 @@
                 <select>
                     <option>Rating</option>
                     <option>Title</option>
+                    <option>Votes</option>
                 </select>
 
                 <div class="filter-menu-buttons">
@@ -74,7 +75,7 @@
         </div>
 
         <div class="movie-cell imdb-num">
-            IMDb #
+            IMDb Votes
         </div>
 
         <div class="movie-cell rating" style="margin: 0;">
@@ -91,14 +92,15 @@
         </div>
     </div>
 
-    {% for movie in movieList %}
+    {% for movie in movieList|slice:"15" %}
     <div class="movies-row">
-        <div class="movie-cell poster" style="text-align: center;">
-            <img src="{{movie.13}}" alt="movie">
+        <form action="" method="POST" class="movie-cell poster" style="text-align: center;">
+            {% csrf_token %}
+            <input type="image" src="{{movie.13}}" alt="movie">
             <span>{{movie.1}}</span>
-        </div>
+        </form>
 
-        <div class="movie-cell genre" style="display: none;"><span class="cell-label">Genre:</span>{{movie.5|truncatechars:16}}</div>
+        <div class="movie-cell genre" style="display: none;"><span class="cell-label">Genre:</span>{{movie.5}}</div>
         <div class="movie-cell netflix" style="display: none;">
             <span class="cell-label">Netflix Status:</span>
             {% if movie.9 != "None" %}
@@ -107,14 +109,21 @@
             <span class="status disabled">Unavailable</span>
             {% endif %}
         </div>
-        <div class="movie-cell imdb-num" style="display: none;"><span class="cell-label">IMDb #:</span>{{movie.0}}</div>
+        <div class="movie-cell imdb-num" style="display: none;"><span class="cell-label">IMDb Votes:</span><a href="{{movie.3}}">{{movie.4}}</a></div>
         <div class="movie-cell rating">
 {#            <span class="cell-label">Rating:</span>#}
             <div class="movie-cell rating" style="text-align: center; margin: auto; color: var(--content-title-color);">
                 <i class="fa fa-star"></i>&#160;{{movie.2}}
             </div>
         </div>
-        <div class="movie-cell watchlist" style="display: none;"><span class="cell-label">Add to Watchlist:</span>Add</div>
+        <div class="movie-cell watchlist" style="display: none;"><span class="cell-label">Add to Watchlist:</span>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button class="action-button" type="submit" style="background-color: #007bff;">
+                    <span>Add</span>
+                </button>
+            </form>
+        </div>
     </div>
     {% endfor %}
 </div>
