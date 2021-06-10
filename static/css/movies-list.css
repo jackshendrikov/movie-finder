@@ -452,3 +452,14 @@
 .gridView .cell-label {
     opacity: 0.6;
 }
+
+.load-more {
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--theme-color);
+}
+
+.load-more:hover {
+    color: var(--content-title-color);
+}

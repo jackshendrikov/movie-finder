@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from users.forms import UserRegisterForm
 from users.models import Watchlist
@@ -80,7 +81,11 @@ def advanced_search(request):
     all_cast = list(set([j for sub in list(movies['cast'].str[2:-2].str.replace("'", "").str.replace('"', '')
                                            .str.split(', ')) for j in sub]))
 
-    if request.method == 'GET':
+    global paginator
+    page = request.GET.get('page', 1)
+
+    if request.method == 'GET' and (request.GET.get('getYear') is not None or request.GET.get('getRate') is not None) \
+            and request.GET.get('page') is None:
         get_rating = request.GET.get('getRate')
         get_year = request.GET.get('getYear')
         get_cast = request.GET.get('getCast')
@@ -105,22 +110,40 @@ def advanced_search(request):
                                                                                                              ascending=False)
         else:
             dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
-                                  (df_advance['genre'].str.contains(get_cast, na=False)) &
+                                  (df_advance['genre'].str.contains(get_genre, na=False)) &
                                   (df_advance['cast'].str.contains(get_cast, na=False)) &
                                   (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='rating',
                                                                                                              ascending=False)
-        dfSelect = dfSelect.values.tolist()
 
+        dfSelect = dfSelect.values.tolist()
         if get_genre == '': get_genre = 'All'
         if get_cast == '': get_cast = 'All'
         if get_keywords == '': get_keywords = 'Any'
         if sorting == 'byYear': sorting = 'By Year'
         else: sorting = 'By Rating'
 
-        return render(request, 'advanced_search.html', {'movieList': dfSelect, 'movieLen': len(dfSelect),
-                                                        'getRate': get_rating, 'getYear': get_year,
+        paginator = Paginator(dfSelect, 10)
+
+        try:
+            movie_items = paginator.page(page)
+        except PageNotAnInteger:
+            movie_items = paginator.page(1)
+        except EmptyPage:
+            movie_items = paginator.page(paginator.num_pages)
+
+        return render(request, 'advanced_search.html', {'getRate': get_rating, 'getYear': get_year,
                                                         'getGenre': get_genre, 'getCast': get_cast,
-                                                        'getKeywords': get_keywords, 'sorting': sorting})
+                                                        'getKeywords': get_keywords, 'sorting': sorting,
+                                                        'movieItems': movie_items})
+    elif request.method == 'GET' and \
+            (request.GET.get('getYear') is None or request.GET.get('getRate') is None) and \
+            request.GET.get('page') is not None:
+        try:
+            movie_items = paginator.page(page)
+        except EmptyPage:
+            movie_items = paginator.page(paginator.num_pages)
+
+        return render(request, 'advanced_search.html', {'movieItems': movie_items})
     else:
         return render(request, 'advanced_search.html')
 
