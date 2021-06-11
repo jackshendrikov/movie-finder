@@ -418,6 +418,11 @@
         margin: 8px 0;
     }
 
+    .gridView .movie-cell.poster {
+        width: 100%;
+    }
+
+
     .gridView .movies-row:hover {
         transform: none;
     }
@@ -453,13 +458,117 @@
     opacity: 0.6;
 }
 
-.load-more {
+
+.pagination {
+    background: transparent;
+    margin: 2rem auto;
+    justify-content: center;
     text-align: center;
-    font-size: 30px;
-    cursor: pointer;
-    color: var(--theme-color);
 }
 
-.load-more:hover {
+.pagination:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.pagination ul {
+    width: 100%;
+}
+
+.pagination {
+    width: 45rem;
+}
+
+.pagination ul, li {
+    list-style: none;
+    display: inline;
+    padding-left: 0;
+}
+
+
+.pagination li:hover a {
+    color: var(--main-bg);
+    background-color: var(--theme-color);
+    border: solid 1px var(--theme-color);
+}
+
+.pagination li.active a {
+    color: var(--main-bg);
+    background-color: var(--theme-color);
+    border: solid 1px var(--theme-color);
+}
+
+.pagination li a {
+    border: solid 1px var(--inactive-color);
+    border-radius: 0.2rem;
     color: var(--content-title-color);
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    padding: 0.5rem 0.9rem;
+    margin-right: 10px;
+}
+
+.pagination li a {
+    display: none;
+}
+
+.pagination li.previous:first-child a {
+    display: inline-block;
+}
+
+.pagination li.previous:first-child a:after {
+    content: "Previous";
+}
+
+.pagination li:nth-child(2) a {
+    display: inline-block;
+}
+
+.pagination li:nth-child(3) a {
+    display: inline-block;
+}
+
+.pagination li:nth-child(4) a {
+    display: inline-block;
+}
+
+.pagination li:nth-child(5) a {
+    display: inline-block;
+}
+
+.pagination li:nth-child(6) a {
+    display: inline-block;
+}
+
+.pagination li:nth-child(7) a {
+    display: inline-block;
+}
+
+.pagination li:nth-child(8) a {
+    display: inline-block;
+}
+
+.pagination li.last:last-child a {
+    display: inline-block;
+}
+
+.pagination li.last:last-child a:after {
+    content: "Next";
+}
+
+.pagination li:nth-last-child(2) a {
+    display: inline-block;
+}
+
+.pagination li:nth-last-child(3) {
+    display: inline-block;
+}
+
+.pagination li:nth-last-child(3):after {
+    padding: 0 1rem;
+    content: "...";
+    margin-right: 5px;
 }

@@ -134,11 +134,32 @@
     </div>
     {% endfor %}
 </div>
-{% if movieItems.has_next %}
-<a class="load-more" href="?page={{ movieItems.next_page_number }}">
-    <i class="fa fa-plus-circle more" aria-hidden="true"></i>
-</a>
+
+{% if movieItems.has_other_pages %}
+<ul class="pagination">
+    {% if movieItems.has_previous %}
+    <li class="previous"><a href="?page={{ movieItems.previous_page_number }}"></a></li>
+    {% else %}
+    <li class="previous" style="display: none;"></li>
+    {% endif %}
+
+    {% for i in movieItems.paginator.page_range %}
+      {% if movieItems.number == i %}
+    <li class="active"><a href="?page={{ i }}">{{ i }}</a></li>
+      {% else %}
+    <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+
+    {% if movieItems.has_next %}
+    <li class="last"><a href="?page={{ movieItems.next_page_number }}"></a></li>
+    {% else %}
+    <li class="last" style="display: none;"></li>
+    {% endif %}
+
+</ul>
 {% endif %}
+
 {% else %}
 <h4 style="position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
     Nothing was found for your query :(
