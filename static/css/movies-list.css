@@ -572,3 +572,57 @@
     content: "...";
     margin-right: 5px;
 }
+
+
+@media screen and (max-width: 820px) {
+    .pagination {
+        width: 14rem;
+    }
+    .pagination li {
+        display: none;
+    }
+    .pagination li.active {
+        display: inline;
+    }
+    .pagination li:first-child {
+        display: inline;
+    }
+    .pagination li:first-child a:after {
+        content: "Prev";
+    }
+    .pagination li:last-child {
+        display: inline;
+    }
+    .pagination li:last-child a:after {
+        content: "Next";
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .pagination {
+        width: 14rem;
+    }
+    .pagination li {
+        display: none;
+    }
+    .pagination li.active {
+        display: none;
+    }
+    .pagination li:first-child {
+        width: 50%;
+        display: inline;
+        margin-right: 5px;
+    }
+    .pagination li:first-child a:after {
+        content: "Previous";
+    }
+    .pagination li:last-child {
+        display: inline;
+    }
+    .pagination li:last-child a:after {
+        content: "Next";
+    }
+    .pagination li:nth-last-child(3):after {
+        display: none;
+    }
+}
