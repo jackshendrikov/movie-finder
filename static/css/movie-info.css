@@ -171,19 +171,35 @@
 .movie-card-right-button-disable {
     padding: 0 0 0 40px;
     margin: 30px auto 0;
+    display: inline-block;
+}
+
+.movie-card-right-button-back {
+    padding: 0 0 0 20px;
+    margin: 30px auto 0;
+    display: inline-block;
 }
 
 
 @media (max-width: 992px) {
     .movie-card-right-button,
+    .movie-card-right-button-back,
     .movie-card-right-button-disable {
         padding: 0;
         text-align: center;
         margin: 20px auto 20px;
+        display: inherit;
+    }
+}
+
+@media (max-width: 992px) {
+    .movie-card-right-button-back {
+        padding: 10px 0 0 20px;
     }
 }
 
 .movie-card-right-button a,
+.movie-card-right-button-back a,
 .movie-card-right-button-disable a {
     text-decoration: none;
     padding: 10px 15px 10px 15px;
@@ -201,6 +217,14 @@
     border: 2px solid #e50914;
 }
 
+.movie-card-right-button-back a {
+    border: 2px solid var(--select-color);
+}
+
+.movie-card-right-button-back {
+    color: var(--select-color);
+}
+
 .movie-card-right-button-disable a {
     cursor: default;
     color: #9c9c9c;
@@ -216,4 +240,18 @@
     cursor: pointer;
     transition-property: all;
     transition-duration: 0.5s;
+}
+
+.movie-card-right-button-back a:hover {
+    background-color: var(--select-color);
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+    background-position: 10% 50%;
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+.movie-card-right-button-back:hover {
+    color: #ffffff;
 }

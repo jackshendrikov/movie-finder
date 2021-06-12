@@ -8,7 +8,7 @@
 {% block content %}
 <div class='movie-card'>
     <div class='movie-card-left'>
-        <img src='{{ poster }}'>
+        <img src='{{ poster }}' alt="poster">
     </div>
 
     <div class='movie-card-right'>
@@ -55,20 +55,26 @@
             </div>
 
             {% if netflix != "None" %}
-            <div class='movie-card-right-button'>
+            <div class='movie-card-right-button' style="display: inline-block;">
                 <a href='{{ netflix }}' target='_blank' >
                     <i class="fa fa-play" aria-hidden="true"></i>
                     &nbsp;WATCH ON NETFLIX
                 </a>
             </div>
             {% else %}
-            <div class='movie-card-right-button-disable' >
+            <div class='movie-card-right-button-disable'>
                 <a style="color: #9c9c9c;">
                     <i class="fa fa-frown-o" aria-hidden="true"></i>
                     &nbsp;MISSING ON NETFLIX
                 </a>
             </div>
             {% endif %}
+            <div class='movie-card-right-button-back'>
+                <a onclick="window.history.back();">
+                    <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                    &nbsp;GO BACK
+                </a>
+            </div>
         </div>
     </div>
 </div>
