@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Advanced Movie Search{% endblock %}
 
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'libs/icons.css' %}">
@@ -62,6 +63,11 @@
                         <label for="by-rating" class="radio">
                             <input type="radio" value="byIMDb" name="sorting" id="by-rating" class="hidden" checked/>
                             <span class="label"></span>By IMDb
+                        </label>
+
+                        <label for="by-votes" class="radio">
+                            <input type="radio" value="byVotes" name="sorting" id="by-votes" class="hidden"/>
+                            <span class="label"></span>By Votes
                         </label>
 
                         <label for="by-year" class="radio">

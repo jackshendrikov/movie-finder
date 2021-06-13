@@ -104,20 +104,25 @@ def advanced_search(request):
             dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
                                   (df_advance['genre'].str.contains(get_genre, na=False)) &
                                   (df_advance['cast'].str.contains(get_cast, na=False)) &
-                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='year',
-                                                                                                             ascending=False)
+                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='year', ascending=False)
+        elif sorting == 'byVotes':
+            dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
+                                  (df_advance['genre'].str.contains(get_genre, na=False)) &
+                                  (df_advance['cast'].str.contains(get_cast, na=False)) &
+                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='votes', ascending=False)
         else:
             dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
                                   (df_advance['genre'].str.contains(get_genre, na=False)) &
                                   (df_advance['cast'].str.contains(get_cast, na=False)) &
-                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='rating',
-                                                                                                             ascending=False)
+                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='rating', ascending=False)
 
         dfSelect = dfSelect.values.tolist()
         if get_genre == '': get_genre = 'All'
         if get_cast == '': get_cast = 'All'
         if get_keywords == '': get_keywords = 'Any'
+
         if sorting == 'byYear': sorting = 'By Year'
+        elif sorting == 'byVotes': sorting = 'By Votes'
         else: sorting = 'By Rating'
 
         paginator = Paginator(dfSelect, 15)
