@@ -55,12 +55,12 @@
         <div class="header-menu">
                 <a class="menu-link" href="">Genres</a>
                 <a class="menu-link" href="">Specials</a>
-{#            {% if user.is_authenticated %}#}
-{#                <a class="menu-link" href="{% url 'logout' %}">Log Out</a>#}
-{#            {% else %}#}
-{#                <a class="menu-link" href="{% url 'login' %}">Log In</a>#}
+            {% if user.is_authenticated %}
+                <a class="menu-link" href="{% url 'logout' %}">Log Out</a>
+            {% else %}
+                <a class="menu-link" href="{% url 'login' %}">Log In</a>
 {#                <a class="menu-link" href="{% url 'register' %}">Register</a>#}
-{#            {% endif %}#}
+            {% endif %}
         </div>
 
          <div class="header-profile">
