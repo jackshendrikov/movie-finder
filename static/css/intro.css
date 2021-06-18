@@ -1,0 +1,22 @@
+body {
+      border: none;
+      margin: 0;
+      padding: 0;
+      background: #000000;
+    }
+
+.player {
+	margin-bottom: 20px;
+	vertical-align: top;
+	position: relative;
+	left: 0;
+	overflow: hidden;
+	border-radius: 4px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, .7);
+	background: rgba(0, 0, 0, .5)
+}
+
+.player img {
+	margin: 0!important;
+	transform: none!important
+}

@@ -13,6 +13,7 @@ urlpatterns = [
     # path('allseries', views.all_series, name='series'),
     # path('top', views.top_movies, name='top100'),
     path('advsearch', views.advanced_search, name='advanced-search'),
+    path('intro', views.show_intro, name='show-result'),
     # path('genre', views.genre_page, name='genre-page'),
     path('result', views.result_page, name='result'),
     # path('watchlist/', views.watchlist, name="watchlist"),

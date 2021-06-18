@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intro Movie</title>
+    <link rel="icon" href="{% static 'ico/logo.ico' %}" type="image/x-icon">
+    <link rel="stylesheet"  href="{% static 'css/intro.css' %}">
+</head>
+<body>
+<form action="{% url 'result' %}" method="POST" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" value="{{ title }}" name="movie">
+</form>
+
+<div id="intro" class="mbYTPVideo inline_YTPlayer"
+     data-property="{
+        videoURL:'{{ youtube }}',
+        useOnMobile: true,
+        opacity:1,
+        autoPlay:true,
+        containment:'body',
+        startAt:0,
+        stopAt:0,
+        mute:false,
+        vol:50,
+        optimizeDisplay:true,
+        showControls:false,
+        printUrl:true,
+        loop:false,
+        addRaster:false,
+        realfullscreen:true,
+        ratio:'auto',
+        abundance:'0.1',
+        anchor:'center,center',
+        gaTrack:false,
+        stopMovieOnBlur:true,
+        remember_last_time:false}">
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="{% static 'libs/YTPlayer.js' %}"></script>
+<script>
+    jQuery(".mbYTPVideo").YTPlayer({
+		useNoCookie: true
+	});
+
+    jQuery('#intro').on("YTPEnd",function(){
+        $( "form" ).submit();
+    });
+</script>
+</body>
+</html>

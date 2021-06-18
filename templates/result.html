@@ -71,7 +71,7 @@
             </div>
             {% endif %}
             <div class='movie-card-right-button-back'>
-                <a onclick="window.history.back();">
+                <a onclick="{% if youtube != "None" %}window.history.go(-2);{% else %}window.history.back();{% endif %}">
                     <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                     &nbsp;GO BACK
                 </a>

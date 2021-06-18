@@ -171,8 +171,20 @@ def advanced_search(request):
 #     genre = dfTopGenre.values.tolist()
 #
 #     return render(request, 'genre.html', {'movieList': genre, 'genre_type': genre_type})
-
 #
+
+def show_intro(request):
+    movie = request.POST.get('movie', 'False')
+    search = movies[movies['title'] == movie]
+    youtube = search['youtube'].to_string(index=False).strip()
+    title = search['title'].to_string(index=False).strip()
+
+    if youtube != 'None':
+        return render(request, "intro.html", {'youtube': "https://www.youtube.com/watch?v=" + youtube, 'title': title})
+    else:
+        return result_page(request)
+
+
 def result_page(request):
     movie = request.POST.get('movie', 'False')
     search = movies[movies['title'] == movie]
@@ -192,10 +204,11 @@ def result_page(request):
     plot = search['plot'].to_string(index=False).strip()
     poster = search['poster'].to_string(index=False).strip()
     year = search['year'].to_string(index=False).strip()
+    youtube = search['youtube'].to_string(index=False).strip()
 
     full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
                    'votes': votes, 'genres': genres, 'cast': cast, 'runtime': runtime, 'mtype': mType,
                    'netflix': netflix, 'plot': plot, 'poster': poster, 'genres_split': genres_split,
-                   'year': year, 'cast_list': cast_list}
+                   'year': year, 'youtube': youtube, 'cast_list': cast_list}
 
     return render(request, "result.html", full_result)
