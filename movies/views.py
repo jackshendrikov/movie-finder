@@ -17,19 +17,19 @@ dfTop = movies.sort_values(by='rating', ascending=False)[0:100]
 dfTopList = dfTop.values.tolist()
 
 
-# def register(request):
-#     if request.user.is_authenticated:
-#         return redirect('main_page')
-#     if request.method == 'POST':
-#         form = UserRegisterForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             messages.success(request, f'Created Account for {username}')
-#             return redirect('login')
-#     else:
-#         form = UserRegisterForm()
-#     return render(request, 'register.html', {'form': form})
+def register(request):
+    if request.user.is_authenticated:
+        return redirect('main_page')
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Created Account for {username}')
+            return redirect('login')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
 
 
 # @login_required

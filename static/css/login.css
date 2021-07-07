@@ -17,6 +17,7 @@ a { cursor: pointer; }
   background-color: #bdd7f4;
   color: #141e30;
   font-size: 1.7rem;
+  z-index: 999;
 }
 
 .login-box {
@@ -30,6 +31,7 @@ a { cursor: pointer; }
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0,0,0,.6);
   border-radius: 10px;
+  z-index: 1;
 }
 
 .login-box h2 {
