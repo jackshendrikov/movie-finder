@@ -214,8 +214,9 @@ input[type=submit]:active {
     background: var(--main-bg);
     width: 1020px;
     margin: 0 auto;
-    border-radius: 5px;
-    box-shadow: 0 43px 100px rgba(68, 104, 194, 0.18);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
 }
 
 @media (max-width: 992px) {

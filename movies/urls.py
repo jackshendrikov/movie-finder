@@ -8,13 +8,13 @@ urlpatterns = [
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     path('accounts/', include('django.contrib.auth.urls')),
 
-    path('register', views.register, name="register"),
+    path('register/', views.register, name='register'),
     # path('all', views.all_movies, name='all'),
     # path('allseries', views.all_series, name='series'),
     # path('top', views.top_movies, name='top100'),
-    path('advsearch', views.advanced_search, name='advanced-search'),
-    path('intro', views.show_intro, name='show-result'),
+    path('advsearch/', views.advanced_search, name='advanced-search'),
+    path('movie-info/', views.show_intro, name='show-result'),
     # path('genre', views.genre_page, name='genre-page'),
-    path('result', views.result_page, name='result'),
+    path('result/', views.result_page, name='result'),
     # path('watchlist/', views.watchlist, name="watchlist"),
 ]

@@ -9,6 +9,7 @@
 
 {% block content %}
 <form class="adv-search" action="{% url 'advanced-search' %}" method="GET" autocomplete="off">
+    {% csrf_token %}
     <div class="container">
         <header class="adv-search-header">
             <h2 class="title">ADVANCED SEARCH</h2>
