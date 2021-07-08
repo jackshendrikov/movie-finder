@@ -24,7 +24,10 @@ def fill_form(request):
             messages.success(request, f'Added Review for {movie_selected}')
             form.save()
             return redirect('my-reviews')
-    form = ReviewForms()
+        else:
+            print(form.errors)
+    else:
+        form = ReviewForms()
     params = {'form': form, 'movie': movie_selected}
     return render(request, 'review.html', params)
 
@@ -59,7 +62,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     context_object_name = 'reviews'
     fields = ['rating', 'review_description']
     template_name = 'review.html'
-    success_url = '/reviews'
+    success_url = '/reviews/'
 
     def form_valid(self, form, *args, **kwargs):
         form.instance.author = self.request.user

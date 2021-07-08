@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class Review(models.Model):
     movie = models.CharField(max_length=100, null=True)
-    rating = models.DecimalField(max_digits=2, decimal_places=1, default=5.0)
+    rating = models.DecimalField(max_digits=3, decimal_places=1, default=5.0)
     review_description = models.TextField(default="")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()

@@ -16,11 +16,10 @@
 
     {% if form.errors %}
         {% for error in form.errors %}
-            <ul class="errorlist">
-                <li>
-                    <strong>The {{ error|escape }} field is required.</strong>
-                </li>
-            </ul>
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>"{{ error|escape }}"</strong> field is required.
+            </div>
         {% endfor %}
     {% endif %}
 
@@ -29,34 +28,34 @@
         <div class="form-group">
             <label for="id_title" name="title" style="display: block; text-align: center; font-size: 16px;">Your Rating</label>
             <div id="rating" class="rating">
-                <input type="radio" name="rating" id="rating-10">
+                <input type="radio" name="rating" id="rating-10" value="10.0">
                 <label for="rating-10"></label>
 
-                <input type="radio" name="rating" id="rating-9">
+                <input type="radio" name="rating" id="rating-9" value="9">
                 <label for="rating-9"></label>
 
-                <input type="radio" name="rating" id="rating-8">
+                <input type="radio" name="rating" id="rating-8" value="8">
                 <label for="rating-8"></label>
 
-                <input type="radio" name="rating" id="rating-7">
+                <input type="radio" name="rating" id="rating-7" value="7">
                 <label for="rating-7"></label>
 
-                <input type="radio" name="rating" id="rating-6">
+                <input type="radio" name="rating" id="rating-6" value="6">
                 <label for="rating-6"></label>
 
-                <input type="radio" name="rating" id="rating-5">
+                <input type="radio" name="rating" id="rating-5" value="5">
                 <label for="rating-5"></label>
 
-                <input type="radio" name="rating" id="rating-4">
+                <input type="radio" name="rating" id="rating-4" value="4">
                 <label for="rating-4"></label>
 
-                <input type="radio" name="rating" id="rating-3">
+                <input type="radio" name="rating" id="rating-3" value="3">
                 <label for="rating-3"></label>
 
-                <input type="radio" name="rating" id="rating-2">
+                <input type="radio" name="rating" id="rating-2" value="2">
                 <label for="rating-2"></label>
 
-                <input type="radio" name="rating" id="rating-1">
+                <input type="radio" name="rating" id="rating-1" value="1">
                 <label for="rating-1"></label>
 
                 <div class="emoji-wrapper">
