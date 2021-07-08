@@ -9,7 +9,7 @@
 {% block content %}
     <form method="POST">
         {% csrf_token %}
-        <div class="content-section-main-title" style="margin-bottom: 14px; font-size: 24px;">
+        <div class="content-section-main-title">
             Add Review for
             <span style="color: var(--review-color);"><br>"{{ movie }}"</span>
         </div>
@@ -28,7 +28,7 @@
         {% csrf_token %}
         <div class="form-group">
             <label for="id_title" name="title" style="display: block; text-align: center; font-size: 16px;">Your Rating</label>
-            <div class="rating">
+            <div id="rating" class="rating">
                 <input type="radio" name="rating" id="rating-10">
                 <label for="rating-10"></label>
 
@@ -157,7 +157,7 @@
         <div class="form-group">
             <label for="id_note" style="display: block; text-align: center; font-size: 16px;">Your Review</label>
 
-            <textarea class="form-control" id="id_note" name="note" rows="5" aria-describedby="inputNoteHelp">{% if form.note.value %}{{ form.note.value }}{% endif %}</textarea>
+            <textarea class="form-control" id="id_note" name="review_description" rows="5" aria-describedby="inputNoteHelp">{% if form.note.value %}{{ form.note.value }}{% endif %}</textarea>
 
             <small id="inputNoteHelp" class="form-text text-muted">
                 Describe your feelings after watching. Would you recommend this film?
@@ -170,3 +170,6 @@
     </form>
 </form>
 {% endblock %}
+
+{% block extra_js %}
+{% endblock extra_js %}
