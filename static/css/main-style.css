@@ -25,6 +25,7 @@
   --img-border: rgba(16 18 27 / 40%);
   --footer-color: #f9fafb;
   --select-color: #fc9803;
+  --review-color: #4a90e2;
   --read-more: #ffda00;
 }
 
@@ -40,6 +41,7 @@
   --img-border: rgba(53 97 158 / 50%);
   --footer-color: #f7f7f7;
   --select-color: #4a90e2;
+  --review-color: #fc9803;
   --read-more: #4a90e2;
 }
 
@@ -377,16 +379,6 @@ body.light-mode:before {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-circle {
-  -webkit-transform-origin: 50% 50%;
-          transform-origin: 50% 50%;
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  -webkit-transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .svg-text {

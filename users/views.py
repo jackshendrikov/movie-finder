@@ -11,8 +11,8 @@ from .models import Review
 
 @login_required
 def fill_form(request):
-    movie_selected = request.GET.get('movie', "notSelected")
-    if movie_selected == "notSelected":
+    movie_selected = request.GET.get('movie', 'notSelected')
+    if movie_selected == 'notSelected':
         messages.warning(request, f'URL Not Allowed. Select the movie first!')
         return redirect('../')
 
@@ -26,7 +26,7 @@ def fill_form(request):
             return redirect('my-reviews')
     form = ReviewForms()
     params = {'form': form, 'movie': movie_selected}
-    return render(request, 'form.html', params)
+    return render(request, 'review.html', params)
 
 
 class PostListView(LoginRequiredMixin, ListView):
@@ -58,8 +58,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Review
     context_object_name = 'reviews'
     fields = ['rating', 'review_description']
-    template_name = 'form.html'
-    success_url = "/reviews"
+    template_name = 'review.html'
+    success_url = '/reviews'
 
     def form_valid(self, form, *args, **kwargs):
         form.instance.author = self.request.user

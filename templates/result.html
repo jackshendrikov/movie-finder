@@ -76,6 +76,14 @@
                     &nbsp;GO BACK
                 </a>
             </div>
+
+            <form id="add-review" class='movie-card-review-button' style="display: inline-block;"  action="{% url 'review' %}" method="GET">
+                 <input type="hidden" value="{{ title }}" name="movie">
+                 <span onclick="$('#add-review').submit();">
+                    <i class="fa fa-comment" aria-hidden="true"></i>
+                    &nbsp;ADD REVIEW
+                </span>
+            </form>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@ from .views import (PostListView, PostDetailView, PostListViewUser, PostUpdateVi
 urlpatterns = [
     path('review/', views.fill_form, name="review"),
     path('reviews/', PostListViewUser.as_view(), name="my-reviews"),
-    path('reviews/allreviews/', PostListView.as_view(), name="all-reviews"),   # Private
+    path('reviews/allreviews/', PostListView.as_view(), name="all-reviews"),
 
     path('reviews/<int:pk>/', PostDetailView.as_view(), name="review-detail"),
     path('reviews/<int:pk>/update/', PostUpdateView.as_view(), name="review-update"),
