@@ -111,7 +111,7 @@ input[type=submit]:active {
 /* -------- MAIN STYLE FOR SIGN UP -------- */
 .sign-up {
     background: rgba(0,0,0,.5);
-    width: 1020px;
+    width: 800px;
     margin: 0 auto;
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
@@ -211,7 +211,7 @@ input[type=submit]:active {
 .sign-up .container .sign-up-form .form-content .row-wrapper .pass1,
 .sign-up .container .sign-up-form .form-content .row-wrapper .pass2 {
     flex: 0;
-    flex-basis: 1000px;
+    flex-basis: 750px;
 }
 
 .sign-up .container .sign-up-form .form-content .row-wrapper .username input,

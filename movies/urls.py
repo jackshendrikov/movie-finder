@@ -16,5 +16,5 @@ urlpatterns = [
     path('movie-info/', views.show_intro, name='show-result'),
     # path('genre', views.genre_page, name='genre-page'),
     path('result/', views.result_page, name='result'),
-    # path('watchlist/', views.watchlist, name="watchlist"),
+    path('watchlist/', views.watchlist, name="watchlist"),
 ]

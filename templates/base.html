@@ -14,7 +14,7 @@
     <meta property="og:url" content="https://jackshen.herokuapp.com/home/" />
     <meta property="og:image:url" content="https://i.imgur.com/rRdN8kn.png" />
 
-    <title>Movie Finder</title>
+    <title>{% block title %}Movie Finder{% endblock %}</title>
     <link rel="icon" href="{% static 'ico/logo.ico' %}" type="image/x-icon">
 
     <!-- Main core CSS -->
@@ -78,7 +78,12 @@
                 <div class="content-section">
                     {% if messages %}
                         {% for message in messages %}
-                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 1.2rem;">
+                                    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                                </button>
+                            </div>
                         {% endfor %}
                     {% endif %}
 

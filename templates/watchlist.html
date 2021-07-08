@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Movies List{% endblock %}
+{% block title %}{{ user.username }}'s Watchlist{% endblock %}
 
 {% block extrahead %}
-    <link rel="stylesheet" href="{% static 'css/movies-list.css' %}">
+<link rel="stylesheet" href="{% static 'css/movies-list.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="app-content-header" style="text-align: center; margin: auto;">
-    <h1 class="app-content-header-text">Movie List &#160;<i class="fa fa-film" aria-hidden="true"></i></h1>
+    <h1 class="app-content-header-text">{{ user.username }}'s Watchlist &#160;<i class="fa fa-film" aria-hidden="true" style="color: #FFBC0B"></i></h1>
 </div>
 
-{% if movieItems %}
+{% if userWatchlist %}
 <div class="app-content-list">
     <input class="search-genre" placeholder="Search specific genre..." type="text">
     <div class="app-content-list-wrapper">
@@ -95,17 +95,17 @@
         </div>
 
         <div class="movie-cell watchlist">
-            Add to Watchlist
+            Remove from Watchlist
         </div>
     </div>
 
-    {% for movie in movieItems %}
+    {% for movie in userWatchlist %}
     <div class="movies-row">
         <form action="{% url 'show-result' %}" method="POST" class="movie-cell poster" style="text-align: center;">
             {% csrf_token %}
-            <input type="hidden" value="{{movie.1}}" name="movie">
+            <input type="hidden" value="{{movie.0}}" name="movie">
             <input type="image" src="{{movie.13}}" alt="movie">
-            <span style="cursor: pointer;">{{movie.1}}</span>
+            <span>{{movie.0}}</span>
         </form>
 
         <div class="movie-cell genre" style="display: none;"><span class="cell-label">Genre:</span>{{movie.5}}</div>
@@ -131,12 +131,12 @@
             </div>
         </div>
 
-        <div class="movie-cell watchlist" style="display: none;"><span class="cell-label">Add to Watchlist:</span>
+        <div class="movie-cell watchlist" style="display: none;"><span class="cell-label">Remove from Watchlist:</span>
             <form action="{% url 'watchlist' %}" method="POST">
                 {% csrf_token %}
-                <input type="hidden" value="{{movie.1}}" name="movie">
-                <button class="action-button" type="submit" style="background-color: #007bff;">
-                    <span>Add</span>
+                <input type="hidden" value="delete{{movie.0}}" name="movie" id="my_title">
+                <button class="action-button" type="submit" style="background-color: #f44336;">
+                    <i class="fa fa-times"></i>
                 </button>
             </form>
         </div>
@@ -144,24 +144,24 @@
     {% endfor %}
 </div>
 
-{% if movieItems.has_other_pages %}
+{% if userWatchlist.has_other_pages %}
 <ul class="pagination">
-    {% if movieItems.has_previous %}
-    <li class="previous"><a href="?page={{ movieItems.previous_page_number }}"></a></li>
+    {% if userWatchlist.has_previous %}
+    <li class="previous"><a href="?page={{ userWatchlist.previous_page_number }}"></a></li>
     {% else %}
     <li class="previous" style="display: none;"></li>
     {% endif %}
 
-    {% for i in movieItems.paginator.page_range %}
-      {% if movieItems.number == i %}
+    {% for i in userWatchlist.paginator.page_range %}
+      {% if userWatchlist.number == i %}
     <li class="active"><a href="?page={{ i }}">{{ i }}</a></li>
       {% else %}
     <li><a href="?page={{ i }}">{{ i }}</a></li>
       {% endif %}
     {% endfor %}
 
-    {% if movieItems.has_next %}
-    <li class="last"><a href="?page={{ movieItems.next_page_number }}"></a></li>
+    {% if userWatchlist.has_next %}
+    <li class="last"><a href="?page={{ userWatchlist.next_page_number }}"></a></li>
     {% else %}
     <li class="last" style="display: none;"></li>
     {% endif %}
@@ -170,16 +170,11 @@
 
 {% else %}
 <h4 style="position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
-    Nothing was found for your query :(
+    Your watchlist is empty :(
 </h4>
 {% endif %}
 {% endblock %}
 
 {% block extra_js %}
-<script>
-$(".movie-cell").click(function(){
-    $(this).closest('form').submit();
-});
-</script>
 <script src="{% static 'js/movies-list.js' %}"></script>
 {% endblock extra_js %}

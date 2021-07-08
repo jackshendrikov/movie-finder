@@ -32,29 +32,42 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
-# @login_required
-# def watchlist(request):
-#     movie = request.POST.get('movie')
-#     user_title_watchlist = list([x.movie for x in Watchlist.objects.filter(author=request.user)])
-#     if request.method == 'POST':
-#         if movie[:6] != "delete":
-#             if movie not in user_title_watchlist:
-#                 add_movie = Watchlist(movie=movie, author=request.user)
-#                 messages.success(request, f'{movie} successfully added to your watchlist!')
-#                 add_movie.save()
-#                 return redirect('watchlist')
-#             else:
-#                 messages.info(request, f'{movie} was already in your watchlist!')
-#                 return redirect('watchlist')
-#         else:
-#             delete_movie = Watchlist.objects.filter( movie=movie[6:], author=request.user)
-#             messages.error(request, f'{movie[6:]} has been deleted!')
-#             delete_movie.delete()
-#             return redirect('watchlist')
-#
-#     df_user_watchlist = movies.set_index('title').loc[user_title_watchlist].reset_index(inplace=False)
-#     list_user_watchlist = df_user_watchlist.values.tolist()[::-1]
-#     return render(request, 'watchlist.html', {'list_user_watchlist': list_user_watchlist})
+@login_required
+def watchlist(request):
+    movie = request.POST.get('movie')
+    user_title_watchlist = list([x.movie for x in Watchlist.objects.filter(author=request.user)])
+
+    if request.method == 'POST':
+        if movie[:6] != "delete":
+            if movie not in user_title_watchlist:
+                add_movie = Watchlist(movie=movie, author=request.user)
+                messages.success(request, f'{movie} successfully added to your watchlist!')
+                add_movie.save()
+                return redirect(request.META['HTTP_REFERER'])
+            else:
+                messages.info(request, f'{movie} was already in your watchlist!')
+                return redirect(request.META['HTTP_REFERER'])
+        else:
+            delete_movie = Watchlist.objects.filter(movie=movie[6:], author=request.user)
+            messages.error(request, f'{movie[6:]} has been deleted from your watchlist!')
+            delete_movie.delete()
+            return redirect('watchlist')
+
+    df_user_watchlist = movies.set_index('title').loc[user_title_watchlist].reset_index(inplace=False)
+    user_watchlist = df_user_watchlist.values.tolist()[::-1]
+    print(user_watchlist)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(user_watchlist, 15)
+
+    try:
+        user_watchlist = paginator.page(page)
+    except PageNotAnInteger:
+        user_watchlist = paginator.page(1)
+    except EmptyPage:
+        user_watchlist = paginator.page(paginator.num_pages)
+
+    return render(request, 'watchlist.html', {'userWatchlist': user_watchlist})
 
 
 def main_page(request):
@@ -178,8 +191,10 @@ def show_intro(request):
     search = movies[movies['title'] == movie]
     youtube = search['youtube'].to_string(index=False).strip()
     title = search['title'].to_string(index=False).strip()
+    print(movie)
 
     if youtube != 'None':
+        print('Hello there!')
         return render(request, "intro.html", {'youtube': "https://www.youtube.com/watch?v=" + youtube, 'title': title})
     else:
         return result_page(request)
