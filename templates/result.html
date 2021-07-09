@@ -6,6 +6,7 @@
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'css/movie-info.css' %}">
     <link rel="stylesheet" href="{% static 'css/movie-reviews.css' %}">
+    <link rel="stylesheet" href="{% static 'css/review.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -88,6 +89,10 @@
             </form>
         </div>
     </div>
+</div>
+
+<div class="reviews-card" id="AddReview">
+{% include 'review.html' %}
 </div>
 
 <div class="reviews-card">

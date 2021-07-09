@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseRedirect
 
 from django.shortcuts import redirect, render
 from django.views.generic import (ListView, DetailView,  UpdateView, DeleteView)
@@ -23,7 +24,7 @@ def fill_form(request):
             form.instance.movie = movie_selected
             messages.success(request, f'Added review for "{movie_selected}"')
             form.save()
-            return redirect('my-reviews')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             print(form.errors)
     else:

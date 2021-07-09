@@ -45,6 +45,7 @@
     }
 }
 
+.review-title,
 .reviews-list .title {
     color: var(--theme-color);
     font-size: 22px;
@@ -62,6 +63,7 @@
 }
 
 @media (max-width: 600px) {
+    .review-title,
     .reviews-list .title {
         font-size: 18px;
     }
