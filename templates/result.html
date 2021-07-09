@@ -10,6 +10,12 @@
 {% endblock %}
 
 {% block content %}
+<form action="{% url 'show-intro' %}" method="POST" id="showIntro">
+    {% csrf_token %}
+    <input type="hidden" value="{{ youtube }}" name="intro">
+    <input type="hidden" value="{{ title }}" name="title">
+</form>
+
 <div class='movie-card'>
     <div class='movie-card-left'>
         <img src='{{ poster }}' alt="poster">
@@ -74,7 +80,7 @@
             </div>
             {% endif %}
             <div class='movie-card-right-button-back'>
-                <a onclick="{% if youtube != "None" %}window.history.go(-2);{% else %}window.history.back();{% endif %}">
+                <a onclick="{% if youtube != "None" or intro == "Played" %}window.history.go(-2);{% else %}window.history.back();{% endif %}">
                     <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                     &nbsp;GO BACK
                 </a>
@@ -144,6 +150,12 @@
 
 {% block extra_js %}
 <script>
+let intro = "{{ youtube }}";
+
+if (intro !== "None") {
+    $("#showIntro").submit();
+}
+
 function readMore(reviewID, reviewDescription) {
     document.getElementById('review-' + reviewID).innerHTML = reviewDescription;
 }

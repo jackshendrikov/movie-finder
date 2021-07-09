@@ -2,6 +2,7 @@ import difflib
 import pandas as pd
 
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -188,22 +189,18 @@ def advanced_search(request):
 #
 
 def show_intro(request):
-    movie = request.POST.get('movie', 'False')
-    search = movies[movies['title'] == movie]
-    youtube = search['youtube'].to_string(index=False).strip()
-    title = search['title'].to_string(index=False).strip()
-    print(movie)
+    youtube = request.POST.get('intro', 'False')
+    title = request.POST.get('title', 'False')
 
-    if youtube != 'None':
-        print('Hello there!')
+    if youtube != 'False' and title != 'False':
         return render(request, "intro.html", {'youtube': "https://www.youtube.com/watch?v=" + youtube, 'title': title})
     else:
-        return result_page(request)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def result_page(request):
-
     movie = request.POST.get('movie', 'False')
+    intro = request.POST.get('intro', 'False')
     search = movies[movies['title'] == movie]
 
     imdb_id = search['imdb_id'].to_string(index=False).strip()
@@ -221,7 +218,12 @@ def result_page(request):
     plot = search['plot'].to_string(index=False).strip()
     poster = search['poster'].to_string(index=False).strip()
     year = search['year'].to_string(index=False).strip()
-    youtube = search['youtube'].to_string(index=False).strip()
+    if intro == 'noIntro':
+        youtube = 'None'
+        intro = 'Played'
+    else:
+        youtube = search['youtube'].to_string(index=False).strip()
+        intro = 'None'
 
     reviews = Review.objects.filter(movie=title)
     reviews_rate = False
@@ -232,6 +234,6 @@ def result_page(request):
                    'votes': votes, 'genres': genres, 'cast': cast, 'runtime': runtime, 'mtype': mType,
                    'netflix': netflix, 'plot': plot, 'poster': poster, 'genres_split': genres_split,
                    'year': year, 'youtube': youtube, 'cast_list': cast_list, 'reviews': reviews,
-                   'reviews_rate': reviews_rate}
+                   'reviews_rate': reviews_rate, 'intro': intro}
 
     return render(request, "result.html", full_result)

@@ -12,6 +12,7 @@
 <form action="{% url 'result' %}" method="POST" style="display: none;">
     {% csrf_token %}
     <input type="hidden" value="{{ title }}" name="movie">
+    <input type="hidden" value="noIntro" name="intro">
 </form>
 
 <div id="intro" class="mbYTPVideo inline_YTPlayer"
@@ -44,7 +45,11 @@
 <script src="{% static 'libs/YTPlayer.js' %}"></script>
 <script>
     jQuery(".mbYTPVideo").YTPlayer({
-		useNoCookie: true
+		useNoCookie: true,
+
+		onError: function( err ) {
+		    $("form").submit();
+        }
 	});
 
     jQuery('#intro').on("YTPEnd",function(){
