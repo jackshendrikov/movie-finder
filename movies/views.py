@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from users.forms import UserRegisterForm
 from users.models import Watchlist
+from users.models import Review
 
 movies = pd.read_csv('movies.csv')
 pd.set_option('display.max_colwidth', None)
@@ -201,6 +202,7 @@ def show_intro(request):
 
 
 def result_page(request):
+
     movie = request.POST.get('movie', 'False')
     search = movies[movies['title'] == movie]
 
@@ -221,9 +223,15 @@ def result_page(request):
     year = search['year'].to_string(index=False).strip()
     youtube = search['youtube'].to_string(index=False).strip()
 
+    reviews = Review.objects.filter(movie=title)
+    reviews_rate = False
+    if reviews:
+        reviews_rate = [(range(int(review.rating)), range(int(10-review.rating))) for review in reviews]
+
     full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
                    'votes': votes, 'genres': genres, 'cast': cast, 'runtime': runtime, 'mtype': mType,
                    'netflix': netflix, 'plot': plot, 'poster': poster, 'genres_split': genres_split,
-                   'year': year, 'youtube': youtube, 'cast_list': cast_list}
+                   'year': year, 'youtube': youtube, 'cast_list': cast_list, 'reviews': reviews,
+                   'reviews_rate': reviews_rate}
 
     return render(request, "result.html", full_result)

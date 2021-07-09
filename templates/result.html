@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load app_index %}
 {% block title %}{{ title }}{% endblock %}
 
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'css/movie-info.css' %}">
+    <link rel="stylesheet" href="{% static 'css/movie-reviews.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -87,7 +89,54 @@
         </div>
     </div>
 </div>
+
+<div class="reviews-card">
+    <div class="reviews-list">
+        <div class="title">"{{ movie }}" Reviews &#160;<i class="fa fa-film" aria-hidden="true" style="color: #FFBC0B"></i></div>
+
+        {% if reviews %}
+            {% for review in reviews %}
+        <div class="review-card">
+            <div class="review-header">
+                <div class="name-group">
+                    <div class="initials">{{ review.author|make_list|first }}</div>
+                    <p>{{ review.author }}</p>
+                </div>
+
+                <div class="rating">
+                    {% for star in reviews_rate|rate_active_index:forloop.counter0 %}
+                    <i class="fa fa-star"></i>
+                    {% endfor %}
+
+                    {% for star in reviews_rate|rate_dis_index:forloop.counter0 %}
+                    <i class="fa fa-star" style="color: #999ba5;"></i>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="review-{{ review.id }}" class="review-description">
+                {{ review.review_description|linebreaksbr|truncatewords:150 }}
+                {% if review.review_description|length > 700 %}
+                <a style="text-decoration: none; color: #007bff; cursor: pointer;" onclick="readMore({{ review.id }}, '{{ review.review_description|linebreaksbr|escapejs }}')">read more</a>
+                {% endif %}
+            </div>
+
+            <div class="review-details">
+                <div class="review-date">{{ review.timestamp|date:"F j, Y, g:i a" }}</div>
+            </div>
+        </div>
+            {% endfor %}
+        {% else %}
+        <div class="empty">No reviews yet :(</div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
+<script>
+function readMore(reviewID, reviewDescription) {
+    document.getElementById('review-' + reviewID).innerHTML = reviewDescription;
+}
+</script>
 {% endblock extra_js %}

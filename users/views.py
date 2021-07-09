@@ -21,7 +21,7 @@ def fill_form(request):
         if form.is_valid():
             form.instance.author = request.user
             form.instance.movie = movie_selected
-            messages.success(request, f'Added Review for {movie_selected}')
+            messages.success(request, f'Added review for "{movie_selected}"')
             form.save()
             return redirect('my-reviews')
         else:
@@ -66,7 +66,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def form_valid(self, form, *args, **kwargs):
         form.instance.author = self.request.user
-        messages.add_message(self.request, messages.INFO, f'Your Review has been Updated!')
+        messages.add_message(self.request, messages.INFO, f'Your review has been updated!')
         return super().form_valid(form)
 
     def test_func(self):
@@ -79,7 +79,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Review
     template_name = 'confirm-delete.html'
-    success_message = f"Review has been Deleted Successfully"
+    success_message = f"Review has been deleted successfully."
     success_url = '/reviews'
 
     def test_func(self):

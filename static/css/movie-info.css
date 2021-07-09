@@ -1,8 +1,8 @@
 .movie-card {
     width: 900px;
-    height: 400px;
+    height: 100%;
     background: var(--main-bg);
-    margin: 30px auto 0;
+    margin: 60px auto 50px;
     -webkit-border-radius: 10px;
        -moz-border-radius: 10px;
             border-radius: 10px;
@@ -12,6 +12,8 @@
 @media (max-width: 992px) {
     .movie-card {
         width: 100%;
+        margin-top: 30px;
+        margin-bottom: 0;
     }
 }
 
