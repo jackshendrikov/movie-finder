@@ -30,6 +30,8 @@
   --read-more: #ffda00;
   --review-card: #2c2b3f;
   --initials-color: #d56a6a;
+  --special-color: #332d5e75;
+  --special-title: #dc3545;
 }
 
 .light-mode {
@@ -49,6 +51,8 @@
   --read-more: #4a90e2;
   --review-card: #35619e38;
   --initials-color: #007bff80;
+  --special-color: #35619e38;
+  --special-title: #21242d;
 }
 
 html {

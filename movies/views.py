@@ -85,8 +85,18 @@ def main_page(request):
 #     return render(request, 'series.html', {'movieList': dfSeries})
 #
 #
-# def top_movies(request):
-#     return render(request, 'top100.html', {'movieList': dfTopList})
+def top_movies(request):
+    page = request.GET.get('page', 1)
+    paginator = Paginator(dfTopList, 15)
+
+    try:
+        movie_items = paginator.page(page)
+    except PageNotAnInteger:
+        movie_items = paginator.page(1)
+    except EmptyPage:
+        movie_items = paginator.page(paginator.num_pages)
+
+    return render(request, 'top100.html', {'movieItems': movie_items})
 
 
 def advanced_search(request):
