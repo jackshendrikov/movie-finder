@@ -169,15 +169,15 @@
     margin: 0;
 }
 
-.movie-card-right-button,
-.movie-card-right-button-disable {
+.movie-card-netflix-button,
+.movie-card-netflix-button-disable {
     padding: 0 0 0 40px;
     margin: 30px auto 0;
     display: inline-block;
 }
 
 .movie-card-review-button,
-.movie-card-right-button-back {
+.movie-card-back-button {
     padding: 0 0 0 20px;
     margin: 30px auto 0;
     display: inline-block;
@@ -185,30 +185,30 @@
 
 
 @media (max-width: 992px) {
-    .movie-card-right-button,
+    .movie-card-netflix-button,
     .movie-card-review-button,
-    .movie-card-right-button-disable {
+    .movie-card-netflix-button-disable {
         padding: 0;
         text-align: center;
         margin: 20px 20px 20px 20px;
-        display: inherit;
+        display: block;
     }
 }
 
 @media (max-width: 992px) {
     .movie-card-review-button {
-        padding: 10px 0 0 20px;
+        padding: 10px 0 0 0;
     }
 
-    .movie-card-right-button-back {
+    .movie-card-back-button {
         display: none;
     }
 }
 
-.movie-card-right-button a,
+.movie-card-netflix-button a,
 .movie-card-review-button span,
-.movie-card-right-button-back a,
-.movie-card-right-button-disable a {
+.movie-card-back-button a,
+.movie-card-netflix-button-disable a {
     text-decoration: none;
     padding: 10px 15px 10px 15px;
     margin: auto;
@@ -220,16 +220,16 @@
     transition-duration: 0.5s;
 }
 
-.movie-card-right-button a {
+.movie-card-netflix-button a {
     color: #e50914;
     border: 2px solid #e50914;
 }
 
-.movie-card-right-button-back a {
+.movie-card-back-button a {
     border: 2px solid var(--select-color);
 }
 
-.movie-card-right-button-back {
+.movie-card-back-button {
     color: var(--select-color);
 }
 
@@ -241,13 +241,13 @@
     color: var(--review-color);
 }
 
-.movie-card-right-button-disable a {
+.movie-card-netflix-button-disable a {
     cursor: default;
     color: #9c9c9c;
     border: 2px solid #9c9c9c;
 }
 
-.movie-card-right-button a:hover {
+.movie-card-netflix-button a:hover {
     color: #ffffff;
     background-color: #e50914;
     background-size: 12px 12px;
@@ -259,7 +259,7 @@
 }
 
 .movie-card-review-button span:hover,
-.movie-card-right-button-back a:hover {
+.movie-card-back-button a:hover {
     background-size: 12px 12px;
     background-repeat: no-repeat;
     background-position: 10% 50%;
@@ -268,7 +268,7 @@
     transition-duration: 0.5s;
 }
 
-.movie-card-right-button-back a:hover {
+.movie-card-back-button a:hover {
     background-color: var(--select-color);
 }
 
@@ -277,6 +277,6 @@
 }
 
 .movie-card-review-button:hover,
-.movie-card-right-button-back:hover {
+.movie-card-back-button:hover {
     color: #ffffff;
 }

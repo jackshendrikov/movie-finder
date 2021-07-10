@@ -64,28 +64,28 @@
             </div>
 
             {% if netflix != "None" %}
-            <div class='movie-card-right-button' style="display: inline-block;">
+            <div class='movie-card-netflix-button'>
                 <a href='{{ netflix }}' target='_blank' >
                     <i class="fa fa-play" aria-hidden="true"></i>
                     &nbsp;WATCH ON NETFLIX
                 </a>
             </div>
             {% else %}
-            <div class='movie-card-right-button-disable'>
+            <div class='movie-card-netflix-button-disable'>
                 <a style="color: #9c9c9c;">
                     <i class="fa fa-frown-o" aria-hidden="true"></i>
                     &nbsp;MISSING ON NETFLIX
                 </a>
             </div>
             {% endif %}
-            <div class='movie-card-right-button-back'>
+            <div class='movie-card-back-button'>
                 <a onclick="{% if youtube != "None" or intro == "Played" %}window.history.go(-2);{% else %}window.history.back();{% endif %}">
                     <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                     &nbsp;GO BACK
                 </a>
             </div>
 
-            <form id="add-review" class='movie-card-review-button' style="display: inline-block;"  action="{% url 'review' %}" method="GET">
+            <form id="add-review" class='movie-card-review-button' action="{% url 'review' %}" method="GET">
                  <input type="hidden" value="{{ title }}" name="movie">
                  <span onclick="$('#add-review').submit();">
                     <i class="fa fa-comment" aria-hidden="true"></i>
@@ -99,7 +99,6 @@
 <div class="reviews-card">
     <div class="reviews-list">
         <div class="title">"{{ movie }}" Reviews &#160;<i class="fa fa-film" aria-hidden="true" style="color: #FFBC0B"></i></div>
-
         {% if reviews %}
             {% for review in reviews %}
         <div class="review-card">
