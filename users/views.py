@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic import (ListView, DetailView,  UpdateView, DeleteView)
 
 from .forms import ReviewForms
@@ -15,21 +15,22 @@ def fill_form(request):
     movie_selected = request.GET.get('movie', 'notSelected')
     if movie_selected == 'notSelected':
         messages.warning(request, f'URL Not Allowed. Select the movie first!')
-        return redirect('../')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     if request.method == 'POST':
         form = ReviewForms(request.POST or None)
         if form.is_valid():
             form.instance.author = request.user
             form.instance.movie = movie_selected
-            messages.success(request, f'Added review for "{movie_selected}"')
+            msg = f'Added review for "{movie_selected}"'
             form.save()
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            return render(request, 'review.html', {'form': form, 'msg': msg, 'movie': movie_selected, 'back': True})
         else:
             print(form.errors)
     else:
         form = ReviewForms()
-    params = {'form': form, 'movie': movie_selected}
+
+    params = {'form': form, 'movie': movie_selected, 'back': False}
     return render(request, 'review.html', params)
 
 

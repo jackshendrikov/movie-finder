@@ -1,3 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}"{{ movie }}" Review{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/movie-reviews.css' %}">
+    <link rel="stylesheet" href="{% static 'css/review.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+    {% for error in form.errors %}
+<div id="danger-alert" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>"{{ error|escape }}"</strong> field is required.
+</div>
+    {% endfor %}
+{% endif %}
+<div class="reviews-card">
     <form method="POST">
         {% csrf_token %}
         <div class="review-title">
@@ -5,16 +25,7 @@
             <span style="color: var(--review-color);">"{{ movie }}"</span>
         </div>
 
-    {% if form.errors %}
-        {% for error in form.errors %}
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>"{{ error|escape }}"</strong> field is required.
-            </div>
-        {% endfor %}
-    {% endif %}
-
-        <form action="" name="add_task" method="post">
+        <form action="" id="addReview" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="id_title" name="title" style="display: block; text-align: center; font-size: 16px;">Your Rating</label>
@@ -155,7 +166,29 @@
             </div>
 
             <div style="text-align:center;">
-                <input type="submit" class="btn btn-primary" name="add_task" style="width: 200px; margin-bottom: 30px" value="Submit">
+                <input type="submit" class="btn btn-primary" name="add_task" style="width: 200px; margin-bottom: 20px" value="Submit">
             </div>
         </form>
     </form>
+</div>
+<form action="{% url 'result' %}" method="POST" id="showInfo">
+    {% csrf_token %}
+    <input type="hidden" value="{{ movie }}" name="movie">
+    <input type="hidden" value="{{ msg }}" name="msg">
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(".alert").delay(4000).slideUp(200, function() {
+    $(this).alert('close');
+});
+
+let goBack = '{{ back }}';
+
+if (goBack === 'True') {
+    $("#showInfo").submit();
+}
+
+</script>
+{% endblock extra_js %}

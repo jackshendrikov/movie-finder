@@ -199,41 +199,49 @@ def show_intro(request):
 
 
 def result_page(request):
-    movie = request.POST.get('movie', 'False')
-    intro = request.POST.get('intro', 'False')
-    search = movies[movies['title'] == movie]
+    movie = request.POST.get('movie', False)
+    intro = request.POST.get('intro', False)
+    msg = request.POST.get('msg', False)
+    if movie:
+        search = movies[movies['title'] == movie]
 
-    imdb_id = search['imdb_id'].to_string(index=False).strip()
-    title = search['title'].to_string(index=False).strip()
-    rating = int(float(search['rating'].to_string(index=False).strip()) * 10)
-    link = search['link'].to_string(index=False).strip()
-    votes = search['votes'].to_string(index=False).strip()
-    genres = search['genre'].to_string(index=False).strip()
-    genres_split = genres.split(',')
-    cast = search['cast'].to_string(index=False).strip()
-    cast_list = cast[2:-2].replace("'", "").split(',')
-    runtime = search['runtime'].to_string(index=False).strip()
-    mType = search['type'].to_string(index=False).strip()
-    netflix = search['netflix'].to_string(index=False).strip()
-    plot = search['plot'].to_string(index=False).strip()
-    poster = search['poster'].to_string(index=False).strip()
-    year = search['year'].to_string(index=False).strip()
-    if intro == 'noIntro':
-        youtube = 'None'
-        intro = 'Played'
+        imdb_id = search['imdb_id'].to_string(index=False).strip()
+        title = search['title'].to_string(index=False).strip()
+        rating = int(float(search['rating'].to_string(index=False).strip()) * 10)
+        link = search['link'].to_string(index=False).strip()
+        votes = search['votes'].to_string(index=False).strip()
+        genres = search['genre'].to_string(index=False).strip()
+        genres_split = genres.split(',')
+        cast = search['cast'].to_string(index=False).strip()
+        cast_list = cast[2:-2].replace("'", "").split(',')
+        runtime = search['runtime'].to_string(index=False).strip()
+        mType = search['type'].to_string(index=False).strip()
+        netflix = search['netflix'].to_string(index=False).strip()
+        plot = search['plot'].to_string(index=False).strip()
+        poster = search['poster'].to_string(index=False).strip()
+        year = search['year'].to_string(index=False).strip()
+        if intro == 'noIntro':
+            youtube = 'None'
+            intro = 'Played'
+        else:
+            youtube = search['youtube'].to_string(index=False).strip()
+            intro = 'None'
+
+        if msg:
+            messages.success(request, msg)
+
+        reviews = Review.objects.filter(movie=title)
+        reviews_rate = False
+        if reviews:
+            reviews_rate = [(range(int(review.rating)), range(int(10-review.rating))) for review in reviews]
+
+        full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
+                       'votes': votes, 'genres': genres, 'cast': cast, 'runtime': runtime, 'mtype': mType,
+                       'netflix': netflix, 'plot': plot, 'poster': poster, 'genres_split': genres_split,
+                       'year': year, 'youtube': youtube, 'cast_list': cast_list, 'reviews': reviews,
+                       'reviews_rate': reviews_rate, 'intro': intro}
+
+        return render(request, "result.html", full_result)
     else:
-        youtube = search['youtube'].to_string(index=False).strip()
-        intro = 'None'
-
-    reviews = Review.objects.filter(movie=title)
-    reviews_rate = False
-    if reviews:
-        reviews_rate = [(range(int(review.rating)), range(int(10-review.rating))) for review in reviews]
-
-    full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
-                   'votes': votes, 'genres': genres, 'cast': cast, 'runtime': runtime, 'mtype': mType,
-                   'netflix': netflix, 'plot': plot, 'poster': poster, 'genres_split': genres_split,
-                   'year': year, 'youtube': youtube, 'cast_list': cast_list, 'reviews': reviews,
-                   'reviews_rate': reviews_rate, 'intro': intro}
-
-    return render(request, "result.html", full_result)
+        messages.error(request, f'Error occurred while we\'re trying to show you info about the movie!')
+        return redirect('/')
