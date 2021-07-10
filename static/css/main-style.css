@@ -28,6 +28,8 @@
   --select-color: #fc9803;
   --review-color: #4a90e2;
   --read-more: #ffda00;
+  --review-card: #2c2b3f;
+  --initials-color: #d56a6a;
 }
 
 .light-mode {
@@ -45,6 +47,8 @@
   --select-color: #4a90e2;
   --review-color: #fc9803;
   --read-more: #4a90e2;
+  --review-card: #35619e38;
+  --initials-color: #007bff80;
 }
 
 html {

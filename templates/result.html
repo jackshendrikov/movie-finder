@@ -126,7 +126,7 @@
             <div id="review-{{ review.id }}" class="review-description">
                 {{ review.review_description|linebreaksbr|truncatewords:70 }}
                 {% if review.review_description|length > 350 %}
-                <a style="text-decoration: none; color: #007bff; cursor: pointer;" onclick="readMore({{ review.id }}, '{{ review.review_description|linebreaksbr|escapejs }}')">read more</a>
+                <a style="text-decoration: none; color: var(--read-more); cursor: pointer;" onclick="readMore({{ review.id }}, '{{ review.review_description|linebreaksbr|escapejs }}')">read more</a>
                 {% endif %}
             </div>
 
