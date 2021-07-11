@@ -80,7 +80,6 @@
             <a class="menu-link" href="{% url 'logout' %}">Log Out</a>
             {% else %}
             <a class="menu-link" href="{% url 'login' %}">Log In</a>
-            <a class="menu-link" href="{% url 'register' %}">Sign Up</a>
             {% endif %}
         </div>
 
@@ -113,7 +112,14 @@
                     {% endif %}
 
                     {% if form.errors %}
-                        <p>{{ form.non_field_errors }}</p>
+                    <p>{{ form.non_field_errors }}</p>
+                    {% endif %}
+
+                    {% if not user.is_authenticated %}
+                    <div style="width: 100%; text-align: center;">
+                        <a class="auth-button" style="margin-right: 20px;" href="{% url 'login' %}">Log In</a>
+                        <a class="auth-button" href="{% url 'register' %}">Sign Up</a>
+                    </div>
                     {% endif %}
 
                     {% block content %}{% endblock %}
