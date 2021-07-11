@@ -47,6 +47,42 @@
             </div>
         </a>
     </div>
+
+    <div class="app-content-header" style="text-align: center; margin: 0 auto 20px;">
+        Special Categories
+    </div>
+
+    <div class="row" align="center">
+        <div class="col-md-4">
+            <div class="card movie-card">
+                <img src="{% static 'img/back-top100.png' %}" alt="category-back" class="background"/>
+                <img src="{% static 'img/top100.png' %}" alt="category" class="category"/>
+                <div class="card-content">
+                    <h2 style="color: #ffce45; text-shadow: 1px 1px 2px black;">TOP-100</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card movie-card">
+                <img src="{% static 'img/back-netflix.jpg' %}" alt="category-back" class="background"/>
+                <img src="{% static 'img/netflix.png' %}" style="max-width: 160px; top: 3%;" alt="category" class="category"/>
+                <div class="card-content">
+                    <h2 style="color: #e50914; text-shadow: 1px 1px 2px black;">Netflix Movies</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card movie-card">
+                <img src="{% static 'img/back-series.jpg' %}" style="transform: scale(1.2);" alt="category-back" class="background"/>
+                <img src="{% static 'img/all_series.png' %}" style="max-width: 120px;" alt="category" class="category"/>
+                <div class="card-content">
+                    <h2 style="color: #f8f9fa; text-shadow: 1px 1px 2px black;">All Series</h2>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_js %}
