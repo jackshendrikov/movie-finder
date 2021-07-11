@@ -12,7 +12,7 @@
         My Reviews &#160;<i class="fa fa-comment" aria-hidden="true" style="color: #FFBC0B"></i>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
+    <div id="MyReviews" class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
         {% for review in reviewPosts %}
             {% if review.author_id == user.id %}
         <div class="col">
@@ -44,10 +44,19 @@
             {% endif %}
         {% endfor %}
     </div>
+
+    <div id="NoReviews" class="content-section-title" style="text-align: center; font-size: 16px; position: relative; top: 50%; transform: translateY(-50%); margin: auto;">
+        You have no reviews for movies yet...
+    </div>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
+if ($("#MyReviews .col").length > 0) {
+    $( "#NoReviews" ).hide();
+}
+
 function readMore(reviewID, reviewDescription) {
     document.getElementById('review-' + reviewID).innerHTML = reviewDescription;
 }

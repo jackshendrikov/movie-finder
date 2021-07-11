@@ -83,8 +83,24 @@ def main_page(request):
 # def all_series(request):
 #     dfSeries = movies[movies['type'] == 'Series'].values.tolist()
 #     return render(request, 'series.html', {'movieList': dfSeries})
-#
-#
+
+def netflix(request):
+    netflix_movies = movies[~movies['netflix'].str.contains('None', na=False)].sort_values(by='year', ascending=False)
+    netflix_movies = netflix_movies.values.tolist()
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(netflix_movies, 15)
+
+    try:
+        movie_items = paginator.page(page)
+    except PageNotAnInteger:
+        movie_items = paginator.page(1)
+    except EmptyPage:
+        movie_items = paginator.page(paginator.num_pages)
+
+    return render(request, "special-item.html", {'movieItems': movie_items})
+
+
 def top_movies(request):
     page = request.GET.get('page', 1)
     paginator = Paginator(dfTopList, 15)
@@ -96,7 +112,7 @@ def top_movies(request):
     except EmptyPage:
         movie_items = paginator.page(paginator.num_pages)
 
-    return render(request, 'top100.html', {'movieItems': movie_items})
+    return render(request, 'special-item.html', {'movieItems': movie_items})
 
 
 def advanced_search(request):
