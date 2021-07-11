@@ -37,9 +37,9 @@
 
 <body>
 <div class="spinner">
-  <div class="inner one"></div>
-  <div class="inner two"></div>
-  <div class="inner three"></div>
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
 </div>
 
 <div class="dark-light">
@@ -48,6 +48,28 @@
     </svg>
 </div>
 
+{% if user.is_authenticated %}
+<input type="checkbox" id="modal" />
+<label for="modal" class="modal-bg"></label>
+<div class="modal-content">
+    <label for="modal" class="close">
+        <i class="fa fa-times" aria-hidden="true"></i>
+	</label>
+
+    <img class="round" src="{{ user|gravatar:128 }}" alt="user" />
+
+    <header>
+		<h2>{{ user.username }}</h2>
+	</header>
+	<footer>
+		<a href="{% url 'watchlist' %}" class="button my-watchlist"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;My Watchlist</a>
+		<a href="{% url 'my-reviews' %}" class="button my-reviews"><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;My Reviews</a>
+		<a href="{% url 'logout' %}" class="button sign-out"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Sign Out</a>
+{#		<label for="modal" class="button">Decline</label>#}
+	</footer>
+</div>
+{% endif %}
+
 <div class="app" id="App">
     <div class="header">
         <img class="logo-img" src="{% static 'ico/logo.png' %}" alt="logo" onclick="window.location.href='{% url "main-page" %}'"/>
@@ -55,8 +77,6 @@
             <a class="menu-link" href="">Genres</a>
             <a class="menu-link" href="{% url 'specials' %}">Specials</a>
             {% if user.is_authenticated %}
-            <a class="menu-link" href="{% url 'watchlist' %}">My Watchlist</a>
-            <a class="menu-link" href="{% url 'my-reviews' %}">My Reviews</a>
             <a class="menu-link" href="{% url 'logout' %}">Log Out</a>
             {% else %}
             <a class="menu-link" href="{% url 'login' %}">Log In</a>
@@ -68,12 +88,12 @@
             <input type="text" name="q" value="" placeholder="Search" id="q" style="padding: 0 20px 0 40px; margin-top: 0; border: none;">
         </form>
 
-         <div class="header-profile">
-             {% if user.is_authenticated %}
+         {% if user.is_authenticated %}
+         <label for="modal" class="header-profile" style="cursor: pointer;">
              {{ user.username }}
              <img class="profile-img" src="{{ user|gravatar:60 }}" alt="avatar"/>
-             {% endif %}
-         </div>
+         </label>
+        {% endif %}
 
     </div>
 
