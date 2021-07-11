@@ -10,15 +10,18 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.register, name='register'),
 
+    path('specials/', TemplateView.as_view(template_name='specials.html'), name='specials'),
+    path('watchlist/', views.watchlist, name="watchlist"),
+    # path('genre', views.genre_page, name='genre-page'),
+
     # path('all', views.all_movies, name='all'),
     path('series/', views.all_series, name='series'),
     path('top/', views.top_movies, name='top100'),
     path('netflix/', views.netflix, name='netflix'),
 
+    path('search/', views.movie_search, name='movie-search'),
     path('advsearch/', views.advanced_search, name='advanced-search'),
+
     path('intro/', views.show_intro, name='show-intro'),
-    # path('genre', views.genre_page, name='genre-page'),
     path('movie-info/', views.result_page, name='result'),
-    path('specials/', TemplateView.as_view(template_name='specials.html'), name='specials'),
-    path('watchlist/', views.watchlist, name="watchlist"),
 ]

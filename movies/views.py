@@ -283,3 +283,27 @@ def result_page(request):
     else:
         messages.error(request, f'Error occurred while we\'re trying to show you info about the movie!')
         return redirect('/')
+
+
+def movie_search(request):
+    if request.GET:
+        movie_items = False
+        if ("q" in request.GET) and request.GET["q"].strip():
+            query_title = request.GET["q"]
+
+            found_movies = movies[movies['title'].str.contains(query_title, na=False)]
+            found_movies = found_movies.sort_values(by='rating', ascending=False).values.tolist()
+
+            page = request.GET.get('page', 1)
+            paginator = Paginator(found_movies, 10)
+
+            try:
+                movie_items = paginator.page(page)
+            except PageNotAnInteger:
+                movie_items = paginator.page(1)
+            except EmptyPage:
+                movie_items = paginator.page(paginator.num_pages)
+    else:
+        movie_items = False
+
+    return render(request, "special-item.html", {'movieItems': movie_items})
