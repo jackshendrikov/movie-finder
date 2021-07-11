@@ -55,8 +55,8 @@
             <a class="menu-link" href="">Genres</a>
             <a class="menu-link" href="{% url 'specials' %}">Specials</a>
             {% if user.is_authenticated %}
-            <a class="menu-link" href="{% url 'watchlist' %}">Watchlist</a>
-            <a class="menu-link" href="{% url 'my-reviews' %}">Reviews</a>
+            <a class="menu-link" href="{% url 'watchlist' %}">My Watchlist</a>
+            <a class="menu-link" href="{% url 'my-reviews' %}">My Reviews</a>
             <a class="menu-link" href="{% url 'logout' %}">Log Out</a>
             {% else %}
             <a class="menu-link" href="{% url 'login' %}">Log In</a>

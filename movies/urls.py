@@ -11,7 +11,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
 
     # path('all', views.all_movies, name='all'),
-    # path('allseries', views.all_series, name='series'),
+    path('series/', views.all_series, name='series'),
     path('top/', views.top_movies, name='top100'),
     path('netflix/', views.netflix, name='netflix'),
 
