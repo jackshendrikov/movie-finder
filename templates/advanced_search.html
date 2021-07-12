@@ -8,12 +8,15 @@
 
 {% block content %}
 <div class="app-content-header" style="text-align: center; margin: auto;">
+    {% if genreType %}
+    <h1 class="app-content-header-text">Most Popular {{ genreType }} Movies &#160;<i class="fa fa-film" aria-hidden="true" style="color: #FFBC0B"></i></h1>
+    {% else %}
     <h1 class="app-content-header-text">Movie List &#160;<i class="fa fa-film" aria-hidden="true" style="color: #FFBC0B"></i></h1>
+    {% endif %}
 </div>
 
 {% if movieItems %}
 <div class="app-content-list">
-    <input class="search-genre" placeholder="Search specific genre..." type="text">
     <div class="app-content-list-wrapper">
         <div class="filter-button-wrapper">
             <button class="action-button filter my-filter">

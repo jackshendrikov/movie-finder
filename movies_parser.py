@@ -22,7 +22,7 @@ for imdb_id in new_movies:
     keywords = ia.get_movie(imdb_id.strip()[2:], info='keywords')
 
     data = json.loads(json_data)
-    # imdb_id, title, rating, link, votes, genre, cast, runtime, type, netflix, plot, keywords, year, poster
+    # imdb_id, title, rating, link, votes, genre, cast, runtime, type, netflix, plot, keywords, year, poster, youtube
     all_movies.write('\n' +
                      data["imdbID"] + ',' + data["Title"] + ',' + data["imdbRating"] + ',https://www.imdb.com/title/' +
                      data["imdbID"] + ',' + data["imdbVotes"].replace(',', '') + ',"' + data["Genre"] + '","' +

@@ -204,26 +204,28 @@ def advanced_search(request):
         return render(request, 'advanced_search.html')
 
 
-# def genre(request):
-    # genre_type = request.GET.get('typeGenre', 'False')
-    # if genre_type == 'Netflix':
-    #     df1 = movies.copy()
-    #     df1 = df1[df1['netflix'].notna()]
-    #     dfTopNet = df1.sort_values(by='rating', ascending=False)
-    #     genre = dfTopNet.values.tolist()
-    #     return render(request, 'genre.html', {'movieList': genre, 'genre_type': genre_type})
-    #
-    # genre = []
-    # for i in range(0, len(movies)):
-    #     if genre_type in movies["genre"][i]:
-    #         genre.append(movies.iloc[i].values.tolist())
-    #
-    # dfByGenre = pd.DataFrame(genre, columns=['imdb_id', 'title', 'rating', 'link', 'votes', 'genre', 'cast', 'runtime',
-    #                                          'type', 'netflix', 'plot', 'keywords', 'year', 'poster'])
-    # dfTopGenre = dfByGenre.sort_values(by='rating', ascending=False)
-    # genre = dfTopGenre.values.tolist()
+def genre(request):
+    genre_type = request.GET.get('typeGenre', 'False')
 
-    # return render(request, 'genre.html', {'movieList': genre, 'genre_type': genre_type})
+    movie_genre = [movies.iloc[i].values.tolist() for i in range(0, len(movies)) if genre_type in movies["genre"][i]]
+
+    dfByGenre = pd.DataFrame(movie_genre, columns=['imdb_id', 'title', 'rating', 'link', 'votes', 'genre', 'cast',
+                                                   'runtime', 'type', 'netflix', 'plot', 'keywords', 'year', 'poster',
+                                                   'youtube'])
+
+    dfTopGenre = dfByGenre.sort_values(by='rating', ascending=False).values.tolist()
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(dfTopGenre, 15)
+
+    try:
+        movie_items = paginator.page(page)
+    except PageNotAnInteger:
+        movie_items = paginator.page(1)
+    except EmptyPage:
+        movie_items = paginator.page(paginator.num_pages)
+
+    return render(request, 'special-item.html', {'movieItems': movie_items, 'genreType': genre_type})
 
 
 def show_intro(request):
