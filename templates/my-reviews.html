@@ -23,9 +23,13 @@
         <div class="col">
             <div class="card mb-3">
                 <div class="card-header theme-bg-fade">
-                    <span class="float-left mr-2 mt-1 h4-responsive robotoBold" style="color: var(--select-color);">
-                        {{ review.movie }}
-                    </span>
+                    <form action="{% url 'result' %}" method="POST" class="movie-review" style="cursor: pointer;">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ review.movie }}" name="movie">
+                        <span class="float-left mr-2 mt-1 h4-responsive robotoBold" style="color: var(--select-color);">
+                            {{ review.movie }}
+                        </span>
+                    </form>
 
                     <span class="float-right mr-2 mt-1 h4-responsive robotoBold"  style="color: var(--author-color);">
                         @{{ review.author }}
@@ -57,6 +61,10 @@
 
 {% block extra_js %}
 <script>
+$(".movie-review").click(function(){
+    $(this).closest('form').submit();
+});
+
 if ($("#MyReviews .col").length > 0) {
     $( "#NoReviews" ).hide();
 }
