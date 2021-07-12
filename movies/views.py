@@ -204,27 +204,27 @@ def advanced_search(request):
         return render(request, 'advanced_search.html')
 
 
-# def genre_page(request):
-#     genre_type = request.GET.get('typeGenre', 'False')
-#     if genre_type == 'Netflix':
-#         df1 = movies.copy()
-#         df1 = df1[df1['netflix'].notna()]
-#         dfTopNet = df1.sort_values(by='rating', ascending=False)
-#         genre = dfTopNet.values.tolist()
-#         return render(request, 'genre.html', {'movieList': genre, 'genre_type': genre_type})
-#
-#     genre = []
-#     for i in range(0, len(movies)):
-#         if genre_type in movies["genre"][i]:
-#             genre.append(movies.iloc[i].values.tolist())
-#
-#     dfByGenre = pd.DataFrame(genre, columns=['imdb_id', 'title', 'rating', 'link', 'votes', 'genre', 'cast', 'runtime',
-#                                              'type', 'netflix', 'plot', 'keywords', 'year', 'poster'])
-#     dfTopGenre = dfByGenre.sort_values(by='rating', ascending=False)
-#     genre = dfTopGenre.values.tolist()
-#
-#     return render(request, 'genre.html', {'movieList': genre, 'genre_type': genre_type})
-#
+# def genre(request):
+    # genre_type = request.GET.get('typeGenre', 'False')
+    # if genre_type == 'Netflix':
+    #     df1 = movies.copy()
+    #     df1 = df1[df1['netflix'].notna()]
+    #     dfTopNet = df1.sort_values(by='rating', ascending=False)
+    #     genre = dfTopNet.values.tolist()
+    #     return render(request, 'genre.html', {'movieList': genre, 'genre_type': genre_type})
+    #
+    # genre = []
+    # for i in range(0, len(movies)):
+    #     if genre_type in movies["genre"][i]:
+    #         genre.append(movies.iloc[i].values.tolist())
+    #
+    # dfByGenre = pd.DataFrame(genre, columns=['imdb_id', 'title', 'rating', 'link', 'votes', 'genre', 'cast', 'runtime',
+    #                                          'type', 'netflix', 'plot', 'keywords', 'year', 'poster'])
+    # dfTopGenre = dfByGenre.sort_values(by='rating', ascending=False)
+    # genre = dfTopGenre.values.tolist()
+
+    # return render(request, 'genre.html', {'movieList': genre, 'genre_type': genre_type})
+
 
 def show_intro(request):
     youtube = request.POST.get('intro', 'False')

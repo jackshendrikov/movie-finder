@@ -74,7 +74,7 @@
     <div class="header">
         <img class="logo-img" src="{% static 'ico/logo.png' %}" alt="logo" onclick="window.location.href='{% url "main-page" %}'"/>
         <div class="header-menu">
-            <a class="menu-link" href="">Genres</a>
+            <a class="menu-link" href="{% url 'genres' %}">Genres</a>
             <a class="menu-link" href="{% url 'specials' %}">Specials</a>
             {% if user.is_authenticated %}
             <a class="menu-link" href="{% url 'logout' %}">Log Out</a>
@@ -116,7 +116,7 @@
                     {% endif %}
 
                     <div id="mobBtn" style="width: 100%; text-align: center;">
-                        <a class="auth-button" style="margin-right: 20px;" href="{% url 'specials' %}">Genres</a>
+                        <a class="auth-button" style="margin-right: 20px;" href="{% url 'genres' %}">Genres</a>
                         <a class="auth-button" href="{% url 'specials' %}">Specials</a>
                     </div>
 

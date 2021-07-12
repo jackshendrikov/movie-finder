@@ -12,7 +12,7 @@ urlpatterns = [
 
     path('specials/', TemplateView.as_view(template_name='specials.html'), name='specials'),
     path('watchlist/', views.watchlist, name="watchlist"),
-    # path('genre', views.genre_page, name='genre-page'),
+    path('genres', TemplateView.as_view(template_name='genres.html'), name='genres'),
 
     # path('all', views.all_movies, name='all'),
     path('series/', views.all_series, name='series'),
