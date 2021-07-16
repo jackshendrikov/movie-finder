@@ -380,7 +380,6 @@ body.light-mode:before {
 }
 
 /* ==== ITEM SETTINGS ==== */
-
 .item-svg {
   position: absolute;
   top: 0;
@@ -868,8 +867,7 @@ label.header-profile {
 
 .auth-button {
   display: inline-block;
-  padding: 1.2em 2.8em;
-  margin-top: 60px;
+  padding: 0.8em 2em;
   margin-bottom: 20px;
   align-self: center;
 
@@ -926,11 +924,11 @@ label.header-profile {
     }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 450px) {
     .auth-button {
       font-size: 14px;
-      padding: 10px 15px;
-      margin-bottom: 7px;
+      padding: 13px 15px;
+      margin-bottom: 10px;
       margin-top: 7px;
     }
 }
