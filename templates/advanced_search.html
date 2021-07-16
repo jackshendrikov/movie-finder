@@ -172,9 +172,15 @@
 {% endif %}
 
 {% else %}
-<h4 style="position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+    {% if getCast == 'No matches' %}
+<h4 style="position: fixed; text-align: center; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+    Nothing was found for your query :( <br><br> Try searching for the full name of the actor/actress
+</h4>
+    {% else %}
+<h4 style="position: fixed; text-align: center; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
     Nothing was found for your query :(
 </h4>
+    {% endif %}
 {% endif %}
 {% endblock %}
 
