@@ -5,6 +5,19 @@
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'libs/icons.css' %}">
     <link rel="stylesheet" href="{% static 'css/adv-search.css' %}">
+    {% if user.is_authenticated %}
+    <style>
+    .adv-search {
+        margin-top: 30px;
+    }
+
+    @media (max-width: 992px) {
+        .adv-search {
+            margin-top: 0;
+        }
+    }
+    </style>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
