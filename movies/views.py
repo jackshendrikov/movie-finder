@@ -276,10 +276,9 @@ def result_page(request):
             reviews_rate = [(range(int(review.rating)), range(int(10-review.rating))) for review in reviews]
 
         full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
-                       'votes': votes, 'genres': genres, 'cast': cast, 'runtime': runtime, 'mtype': mType,
-                       'netflix': netflix, 'plot': plot, 'poster': poster, 'genres_split': genres_split,
-                       'year': year, 'youtube': youtube, 'cast_list': cast_list, 'reviews': reviews,
-                       'reviews_rate': reviews_rate, 'intro': intro}
+                       'votes': votes, 'genres': genres, 'runtime': runtime, 'mtype': mType, 'netflix': netflix,
+                       'plot': plot, 'poster': poster, 'genres_split': genres_split, 'year': year, 'youtube': youtube,
+                       'cast_list': cast_list, 'reviews': reviews, 'reviews_rate': reviews_rate, 'intro': intro}
 
         return render(request, "result.html", full_result)
     else:

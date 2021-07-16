@@ -64,9 +64,17 @@
             </div>
 
             <div class='movie-card-right-review'>
-                <p>{{ plot }}</p>
-                <a href='{{ link }}' target='_blank'>Read more</a>
+                <p>{{ plot }}
+                    <a href='{{ link }}' target='_blank' style="font-weight: bold;">Read more!</a>
+                </p>
             </div>
+
+
+            <ul>
+                {% for actor in cast_list %}
+                <li style="font-weight: bold;">{{ actor }}</li>
+                {% endfor %}
+            </ul>
 
             {% if netflix != "None" %}
             <div class='movie-card-netflix-button'>
