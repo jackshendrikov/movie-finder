@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load app_index %}
-{% block title %}My Reviews{% endblock %}
+{% block title %}All Reviews{% endblock %}
 
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'css/my-reviews.css' %}">
@@ -14,12 +14,12 @@
 
 {% block content %}
     <div class="app-content-header" style="text-align: center; margin: auto;">
-        My Reviews &#160;<i class="fa fa-comment" aria-hidden="true" style="color: #FFBC0B"></i>
+        All Reviews &#160;<i class="fa fa-comment" aria-hidden="true" style="color: #FFBC0B"></i>
     </div>
 
     <div id="MyReviews" class="row row-cols-1 row-cols-sm-2 row-cols-md-2">
-        {% for review in reviewPosts %}
-            {% if review.author_id == user.id %}
+        {% if user.is_superuser %}
+            {% for review in reviewPosts %}
         <div class="col">
             <div class="card mb-3">
                 <div class="card-header theme-bg-fade">
@@ -54,12 +54,38 @@
                 </div>
             </div>
         </div>
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
     </div>
 
+    {% if is_paginated %}
+        {% if page_obj.has_other_pages %}
+    <ul class="pagination">
+            {% if page_obj.has_previous %}
+        <li class="previous"><a href="?page={{ page_obj.previous_page_number }}"></a></li>
+            {% else %}
+        <li class="previous" style="display: none;"></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+        <li class="active"><a href="?page={{ i }}">{{ i }}</a></li>
+                {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+        <li class="last"><a href="?page={{ page_obj.next_page_number }}"></a></li>
+            {% else %}
+        <li class="last" style="display: none;"></li>
+            {% endif %}
+    </ul>
+        {% endif %}
+    {% endif %}
+
     <div id="NoReviews" class="content-section-title" style="text-align: center; font-size: 16px; position: relative; top: 50%; transform: translateY(-50%); margin: auto;">
-        You have no reviews for movies yet...
+        No reviews for movies yet...
     </div>
 {% endblock %}
 

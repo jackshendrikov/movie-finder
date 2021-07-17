@@ -123,7 +123,7 @@ input[type=submit]:active {
 
 .select-options {
     position: absolute;
-    height: 150px;
+    height: 125px;
     top: 100%;
     right: 0;
     left: 0;

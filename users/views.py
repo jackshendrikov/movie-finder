@@ -36,27 +36,17 @@ def fill_form(request):
 
 class PostListView(LoginRequiredMixin, ListView):
     model = Review
-    template_name = 'reviews.html'
+    template_name = 'all-reviews.html'
     context_object_name = 'reviewPosts'
     ordering = ['-timestamp']
-    paginate_by = 4
+    paginate_by = 10
 
 
 class PostListViewUser(LoginRequiredMixin, ListView):
     model = Review
     template_name = 'my-reviews.html'
     context_object_name = 'reviewPosts'
-
-
-class PostDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    model = Review
-    template_name = 'post-detail.html'
-
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return True
+    ordering = ['-timestamp']
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

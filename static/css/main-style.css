@@ -799,6 +799,7 @@ body.light-mode:before {
 
 .modal-content footer .button.my-watchlist,
 .modal-content footer .button.my-reviews,
+.modal-content footer .button.all-reviews,
 .modal-content footer .button.sign-out {
   text-shadow: 1px 0 0 #565454;
   text-decoration: none;
@@ -814,6 +815,11 @@ body.light-mode:before {
 .modal-content footer .button.my-reviews {
   margin-right: 10px;
   background-color: #cb4269;
+}
+
+.modal-content footer .button.all-reviews {
+  margin-right: 10px;
+  background-color: #9c27b0;
 }
 
 .modal-content footer .button.sign-out {
@@ -852,6 +858,7 @@ label.header-profile {
 
   .modal-content footer .button.my-watchlist,
   .modal-content footer .button.my-reviews,
+  .modal-content footer .button.all-reviews,
   .modal-content footer .button.sign-out {
     margin-bottom: 10px;
     width: 150px;

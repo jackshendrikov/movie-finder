@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}"{{ movie }}" Review{% endblock %}
+{% block title %}{% if movie %}"{{ movie }}" Review{% else %}Update Review{% endif %}{% endblock %}
 
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'css/movie-reviews.css' %}">
@@ -26,8 +26,12 @@
     <form method="POST">
         {% csrf_token %}
         <div class="review-title">
+            {% if movie %}
             Add Review for
             <span style="color: var(--review-color);">"{{ movie }}"</span>
+            {% else %}
+            Update Review
+            {% endif %}
         </div>
 
         <form action="" id="addReview" method="post">
