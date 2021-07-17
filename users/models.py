@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.urls import reverse
 
 
 class Review(models.Model):
@@ -19,9 +18,6 @@ class Review(models.Model):
             self.timestamp = timezone.now()
         self.timestamp = timezone.now()
         return super(Review, self).save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return reverse('review-detail', kwargs={'pk': self.pk})
 
 
 class Watchlist(models.Model):
