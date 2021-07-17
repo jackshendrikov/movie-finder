@@ -124,6 +124,11 @@
                 <input type="hidden" value="{{movie.1}}" name="movie">
          </form>
 
+        <form action="{% url 'watchlist' %}" method="POST" class="delete-watchlist">
+                {% csrf_token %}
+                <input type="hidden" value="delete{{movie.1}}" name="movie">
+         </form>
+
         <div class="movie-cell genre" style="display: none;"><span class="cell-label">Genre:</span>{{movie.5}}</div>
 
         <div class="movie-cell netflix" style="display: none;">
@@ -201,8 +206,15 @@
 <script>
 
 $(".watchlist-btn").click(function(){
-    $(this).addClass('added');
-    $(this).closest('.movies-row').find('.add-watchlist').submit();
+    if ($(this).hasClass('added')) {
+        $(this).removeClass('added');
+        $(this).addClass('add');
+        $(this).closest('.movies-row').find('.delete-watchlist').submit();
+    } else {
+        $(this).removeClass('add');
+        $(this).addClass('added');
+        $(this).closest('.movies-row').find('.add-watchlist').submit();
+    }
 });
 </script>
 <script src="{% static 'js/movies-list.js' %}"></script>
