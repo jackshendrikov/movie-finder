@@ -131,6 +131,7 @@ def advanced_search(request):
     df_advance = movies.copy()
     all_cast = list(set([j for sub in list(movies['cast'].str[2:-2].str.replace("'", "").str.replace('"', '')
                                            .str.split(', ')) for j in sub]))
+    my_watchlist = list([x.movie for x in Watchlist.objects.filter(author=request.user)])
 
     global paginator
     page = request.GET.get('page', 1)
@@ -193,7 +194,7 @@ def advanced_search(request):
         return render(request, 'advanced_search.html', {'getRate': get_rating, 'getYear': get_year,
                                                         'getGenre': get_genre, 'getCast': get_cast,
                                                         'getKeywords': get_keywords, 'sorting': sorting,
-                                                        'movieItems': movie_items})
+                                                        'movieItems': movie_items, 'myWatchlist': my_watchlist})
     elif request.method == 'GET' and \
             (request.GET.get('getYear') is None or request.GET.get('getRate') is None) and \
             request.GET.get('page') is not None:
@@ -202,7 +203,7 @@ def advanced_search(request):
         except EmptyPage:
             movie_items = paginator.page(paginator.num_pages)
 
-        return render(request, 'advanced_search.html', {'movieItems': movie_items})
+        return render(request, 'advanced_search.html', {'movieItems': movie_items, 'myWatchlist': my_watchlist})
     else:
         return render(request, 'advanced_search.html')
 

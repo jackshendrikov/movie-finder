@@ -107,9 +107,22 @@
         <form action="{% url 'result' %}" method="POST" class="movie-cell poster" style="text-align: center;">
             {% csrf_token %}
             <input type="hidden" value="{{movie.1}}" name="movie">
-            <input type="image" src="{{movie.13}}" alt="movie">
-            <span style="cursor: pointer;">{{movie.1}}</span>
+            <div style="position: relative;">
+                <input type="image" src="{{movie.13}}" alt="movie" onclick="$(this).closest('form').submit();">
+                <button type="button" class="watchlist-btn {% if movie.1 in myWatchlist %}added{% else %}add{% endif %}">
+                    <div class="icn-btn">
+                        <span class="line line-1"></span>
+                        <span class="line line-2"></span>
+                    </div>
+                </button>
+            </div>
+            <span style="cursor: pointer;" onclick="$(this).closest('form').submit();">{{movie.1}}</span>
         </form>
+
+         <form action="{% url 'watchlist' %}" method="POST" class="add-watchlist">
+                {% csrf_token %}
+                <input type="hidden" value="{{movie.1}}" name="movie">
+         </form>
 
         <div class="movie-cell genre" style="display: none;"><span class="cell-label">Genre:</span>{{movie.5}}</div>
 
@@ -186,8 +199,10 @@
 
 {% block extra_js %}
 <script>
-$(".movie-cell").click(function(){
-    $(this).closest('form').submit();
+
+$(".watchlist-btn").click(function(){
+    $(this).addClass('added');
+    $(this).closest('.movies-row').find('.add-watchlist').submit();
 });
 </script>
 <script src="{% static 'js/movies-list.js' %}"></script>
