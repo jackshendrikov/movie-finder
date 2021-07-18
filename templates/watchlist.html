@@ -87,7 +87,7 @@
             {% csrf_token %}
             <input type="hidden" value="{{movie.0}}" name="movie">
             <div style="position: relative;">
-                <input type="image" src="{{movie.13}}" alt="movie" onclick="$(this).closest('form').submit();">
+                <input type="image" src="{{movie.14}}" alt="movie" onclick="$(this).closest('form').submit();">
                 <button type="button" class="watchlist-btn {% if movie.1 in myWatchlist %}added{% else %}add{% endif %}">
                     <div class="icn-btn">
                         <span class="line line-1"></span>

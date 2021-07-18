@@ -25,10 +25,10 @@ for imdb_id in new_movies:
     # imdb_id, title, rating, link, votes, genre, cast, runtime, type,
     # netflix, plot, keywords, release, year, poster, youtube
     all_movies.write('\n' +
-                     data["imdbID"] + ',' + data["Title"] + ',' + data["imdbRating"] + ',https://www.imdb.com/title/' +
+                     data["imdbID"] + ',"' + data["Title"] + '",' + data["imdbRating"] + ',https://www.imdb.com/title/' +
                      data["imdbID"] + ',' + data["imdbVotes"].replace(',', '') + ',"' + data["Genre"] + '","' +
-                     str(data["Actors"].replace("'", "`").split(', ')) + '",' + data["Runtime"].split()[0] + ',' + data["Type"].title() +
-                     ',None,"' + data["Plot"] + '","' + ", ".join(keywords['keywords'][:15]) + '",' +
-                     data["Released"] + ',' + data["Year"].split('–')[0] + ',' + data["Poster"] + ',None')
+                     str(data["Actors"].replace("'", "`").split(', ')) + '",' + data["Runtime"].split()[0] + ',' +
+                     data["Type"].title() + ',None,"' + data["Plot"].replace('"', "'") + '","' + ", ".join(keywords['keywords'][:15]) +
+                     '",' + data["Released"] + ',' + data["Year"].split('–')[0] + ',' + data["Poster"] + ',None')
 
 all_movies.close()
