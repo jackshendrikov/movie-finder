@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 
@@ -51,7 +52,7 @@ class Youtube(models.Model):
 
 
 class Movie(models.Model):
-    imdb_id = models.CharField(max_length=128)
+    imdb_id = models.CharField(max_length=128, unique=True, default=uuid.uuid4, primary_key=True)
     title = models.CharField(max_length=256)
     link = models.CharField(max_length=256)
     votes = models.IntegerField(null=True, blank=True)
