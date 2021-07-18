@@ -19,6 +19,12 @@ dfTop = movies.sort_values(by='rating', ascending=False)[0:100]
 dfTopList = dfTop.values.tolist()
 
 
+def get_watchlist(request):
+    if request.user.is_authenticated:
+        return list([x.movie for x in Watchlist.objects.filter(author=request.user)])
+    else: return False
+
+
 def register(request):
     if request.user.is_authenticated:
         return redirect('main_page')
@@ -37,11 +43,11 @@ def register(request):
 @login_required
 def watchlist(request):
     movie = request.POST.get('movie')
-    user_title_watchlist = list([x.movie for x in Watchlist.objects.filter(author=request.user)])
+    my_watchlist = get_watchlist(request)
 
     if request.method == 'POST':
         if movie[:6] != "delete":
-            if movie not in user_title_watchlist:
+            if movie not in my_watchlist:
                 add_movie = Watchlist(movie=movie, author=request.user)
                 messages.success(request, f'{movie} successfully added to your watchlist!')
                 add_movie.save()
@@ -55,20 +61,20 @@ def watchlist(request):
             delete_movie.delete()
             return redirect(request.META['HTTP_REFERER'])
 
-    df_user_watchlist = movies.set_index('title').loc[user_title_watchlist].reset_index(inplace=False)
+    df_user_watchlist = movies.set_index('title').loc[my_watchlist].reset_index(inplace=False)
     user_watchlist = df_user_watchlist.values.tolist()[::-1]
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(user_watchlist, 15)
+    paginator_watchlist = Paginator(user_watchlist, 15)
 
     try:
-        user_watchlist = paginator.page(page)
+        user_watchlist = paginator_watchlist.page(page)
     except PageNotAnInteger:
-        user_watchlist = paginator.page(1)
+        user_watchlist = paginator_watchlist.page(1)
     except EmptyPage:
-        user_watchlist = paginator.page(paginator.num_pages)
+        user_watchlist = paginator_watchlist.page(paginator_watchlist.num_pages)
 
-    return render(request, 'watchlist.html', {'userWatchlist': user_watchlist})
+    return render(request, 'watchlist.html', {'userWatchlist': user_watchlist, 'myWatchlist': my_watchlist})
 
 
 def main_page(request):
@@ -80,59 +86,62 @@ def main_page(request):
 
 
 def all_series(request):
+    my_watchlist = get_watchlist(request)
     dfSeriesList = movies[movies['type'] == 'Series'].values.tolist()
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(dfSeriesList, 15)
+    paginator_all_series = Paginator(dfSeriesList, 15)
 
     try:
-        movie_items = paginator.page(page)
+        movie_items = paginator_all_series.page(page)
     except PageNotAnInteger:
-        movie_items = paginator.page(1)
+        movie_items = paginator_all_series.page(1)
     except EmptyPage:
-        movie_items = paginator.page(paginator.num_pages)
+        movie_items = paginator_all_series.page(paginator_all_series.num_pages)
 
-    return render(request, 'special-item.html', {'movieItems': movie_items})
+    return render(request, 'special-item.html', {'movieItems': movie_items, 'myWatchlist': my_watchlist})
 
 
 def netflix(request):
+    my_watchlist = get_watchlist(request)
     netflix_movies = movies[~movies['netflix'].str.contains('None', na=False)].sort_values(by='year', ascending=False)
     netflix_movies = netflix_movies.values.tolist()
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(netflix_movies, 15)
+    paginator_netflix = Paginator(netflix_movies, 15)
 
     try:
-        movie_items = paginator.page(page)
+        movie_items = paginator_netflix.page(page)
     except PageNotAnInteger:
-        movie_items = paginator.page(1)
+        movie_items = paginator_netflix.page(1)
     except EmptyPage:
-        movie_items = paginator.page(paginator.num_pages)
+        movie_items = paginator_netflix.page(paginator_netflix.num_pages)
 
-    return render(request, "special-item.html", {'movieItems': movie_items})
+    return render(request, "special-item.html", {'movieItems': movie_items, 'myWatchlist': my_watchlist})
 
 
 def top_movies(request):
+    my_watchlist = get_watchlist(request)
     page = request.GET.get('page', 1)
-    paginator = Paginator(dfTopList, 15)
+    paginator_top_movies = Paginator(dfTopList, 15)
 
     try:
-        movie_items = paginator.page(page)
+        movie_items = paginator_top_movies.page(page)
     except PageNotAnInteger:
-        movie_items = paginator.page(1)
+        movie_items = paginator_top_movies.page(1)
     except EmptyPage:
-        movie_items = paginator.page(paginator.num_pages)
+        movie_items = paginator_top_movies.page(paginator_top_movies.num_pages)
 
-    return render(request, 'special-item.html', {'movieItems': movie_items})
+    return render(request, 'special-item.html', {'movieItems': movie_items, 'myWatchlist': my_watchlist})
 
 
 def advanced_search(request):
     df_advance = movies.copy()
     all_cast = list(set([j for sub in list(movies['cast'].str[2:-2].str.replace("'", "").str.replace('"', '')
                                            .str.split(', ')) for j in sub]))
-    my_watchlist = list([x.movie for x in Watchlist.objects.filter(author=request.user)])
+    my_watchlist = get_watchlist(request)
 
-    global paginator
+    global paginator_advanced_search
     page = request.GET.get('page', 1)
 
     if request.method == 'GET' and (request.GET.get('getYear') is not None or request.GET.get('getRate') is not None) \
@@ -147,8 +156,10 @@ def advanced_search(request):
         if get_cast:
             get_cast = difflib.get_close_matches(get_cast, all_cast)
 
-            if len(get_cast) > 0: get_cast = get_cast[0]
-            else: get_cast = 'No matches'
+            if len(get_cast) > 0:
+                get_cast = get_cast[0]
+            else:
+                get_cast = 'No matches'
         else:
             get_cast = ''
 
@@ -160,35 +171,41 @@ def advanced_search(request):
             dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
                                   (df_advance['genre'].str.contains(get_genre, na=False)) &
                                   (df_advance['cast'].str.contains(get_cast, na=False)) &
-                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='year', ascending=False)
+                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='year',
+                                                                                                             ascending=False)
         elif sorting == 'byVotes':
             dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
                                   (df_advance['genre'].str.contains(get_genre, na=False)) &
                                   (df_advance['cast'].str.contains(get_cast, na=False)) &
-                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='votes', ascending=False)
+                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='votes',
+                                                                                                             ascending=False)
         else:
             dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
                                   (df_advance['genre'].str.contains(get_genre, na=False)) &
                                   (df_advance['cast'].str.contains(get_cast, na=False)) &
-                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='rating', ascending=False)
+                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(
+                by='rating', ascending=False)
 
         dfSelect = dfSelect.values.tolist()
         if get_genre == '': get_genre = 'All'
         if get_cast == '': get_cast = 'All'
         if get_keywords == '': get_keywords = 'Any'
 
-        if sorting == 'byYear': sorting = 'By Year'
-        elif sorting == 'byVotes': sorting = 'By Votes'
-        else: sorting = 'By Rating'
+        if sorting == 'byYear':
+            sorting = 'By Year'
+        elif sorting == 'byVotes':
+            sorting = 'By Votes'
+        else:
+            sorting = 'By Rating'
 
-        paginator = Paginator(dfSelect, 15)
+        paginator_advanced_search = Paginator(dfSelect, 15)
 
         try:
-            movie_items = paginator.page(page)
+            movie_items = paginator_advanced_search.page(page)
         except PageNotAnInteger:
-            movie_items = paginator.page(1)
+            movie_items = paginator_advanced_search.page(1)
         except EmptyPage:
-            movie_items = paginator.page(paginator.num_pages)
+            movie_items = paginator_advanced_search.page(paginator_advanced_search.num_pages)
 
         return render(request, 'advanced_search.html', {'getRate': get_rating, 'getYear': get_year,
                                                         'getGenre': get_genre, 'getCast': get_cast,
@@ -198,9 +215,9 @@ def advanced_search(request):
             (request.GET.get('getYear') is None or request.GET.get('getRate') is None) and \
             request.GET.get('page') is not None:
         try:
-            movie_items = paginator.page(page)
+            movie_items = paginator_advanced_search.page(page)
         except EmptyPage:
-            movie_items = paginator.page(paginator.num_pages)
+            movie_items = paginator_advanced_search.page(paginator_advanced_search.num_pages)
 
         return render(request, 'advanced_search.html', {'movieItems': movie_items, 'myWatchlist': my_watchlist})
     else:
@@ -208,6 +225,7 @@ def advanced_search(request):
 
 
 def genre(request):
+    my_watchlist = get_watchlist(request)
     genre_type = request.GET.get('typeGenre', 'False')
 
     movie_genre = [movies.iloc[i].values.tolist() for i in range(0, len(movies)) if genre_type in movies["genre"][i]]
@@ -219,16 +237,17 @@ def genre(request):
     dfTopGenre = dfByGenre.sort_values(by='rating', ascending=False).values.tolist()
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(dfTopGenre, 15)
+    paginator_genre = Paginator(dfTopGenre, 15)
 
     try:
-        movie_items = paginator.page(page)
+        movie_items = paginator_genre.page(page)
     except PageNotAnInteger:
-        movie_items = paginator.page(1)
+        movie_items = paginator_genre.page(1)
     except EmptyPage:
-        movie_items = paginator.page(paginator.num_pages)
+        movie_items = paginator_genre.page(paginator_genre.num_pages)
 
-    return render(request, 'special-item.html', {'movieItems': movie_items, 'genreType': genre_type})
+    return render(request, 'special-item.html', {'movieItems': movie_items, 'genreType': genre_type,
+                                                 'myWatchlist': my_watchlist})
 
 
 def show_intro(request):
@@ -276,7 +295,7 @@ def result_page(request):
         reviews = Review.objects.filter(movie=title)
         reviews_rate = False
         if reviews:
-            reviews_rate = [(range(int(review.rating)), range(int(10-review.rating))) for review in reviews]
+            reviews_rate = [(range(int(review.rating)), range(int(10 - review.rating))) for review in reviews]
 
         full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
                        'votes': votes, 'genres': genres, 'runtime': runtime, 'mtype': mType, 'netflix': netflix,
@@ -290,6 +309,7 @@ def result_page(request):
 
 
 def movie_search(request):
+    my_watchlist = get_watchlist(request)
     if request.GET:
         movie_items = False
         if ("q" in request.GET) and request.GET["q"].strip():
@@ -299,15 +319,15 @@ def movie_search(request):
             found_movies = found_movies.sort_values(by='rating', ascending=False).values.tolist()
 
             page = request.GET.get('page', 1)
-            paginator = Paginator(found_movies, 10)
+            paginator_search = Paginator(found_movies, 10)
 
             try:
-                movie_items = paginator.page(page)
+                movie_items = paginator_search.page(page)
             except PageNotAnInteger:
-                movie_items = paginator.page(1)
+                movie_items = paginator_search.page(1)
             except EmptyPage:
-                movie_items = paginator.page(paginator.num_pages)
+                movie_items = paginator_search.page(paginator_search.num_pages)
     else:
         movie_items = False
 
-    return render(request, "special-item.html", {'movieItems': movie_items})
+    return render(request, "special-item.html", {'movieItems': movie_items, 'myWatchlist': my_watchlist})

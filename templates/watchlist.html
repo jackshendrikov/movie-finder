@@ -18,30 +18,7 @@
 
 {% if userWatchlist %}
 <div class="app-content-list">
-    <input class="search-genre" placeholder="Search specific genre..." type="text">
     <div class="app-content-list-wrapper">
-        <div class="filter-button-wrapper">
-            <button class="action-button filter my-filter">
-                <span>Filter</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter">
-                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                </svg>
-            </button>
-
-            <div class="filter-menu">
-                <label>Filter by</label>
-                <select>
-                    <option>Rating</option>
-                    <option>Title</option>
-                    <option>Votes</option>
-                </select>
-
-                <div class="filter-menu-buttons">
-                    <button class="filter-button apply">Apply</button>
-                </div>
-            </div>
-        </div>
-
         <button class="action-button list" title="List View">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
                 <line x1="8" y1="6" x2="21" y2="6"></line>
@@ -109,9 +86,27 @@
         <form action="{% url 'result' %}" method="POST" class="movie-cell poster" style="text-align: center;">
             {% csrf_token %}
             <input type="hidden" value="{{movie.0}}" name="movie">
-            <input type="image" src="{{movie.13}}" alt="movie">
-            <span>{{movie.0}}</span>
+            <div style="position: relative;">
+                <input type="image" src="{{movie.13}}" alt="movie" onclick="$(this).closest('form').submit();">
+                <button type="button" class="watchlist-btn {% if movie.1 in myWatchlist %}added{% else %}add{% endif %}">
+                    <div class="icn-btn">
+                        <span class="line line-1"></span>
+                        <span class="line line-2"></span>
+                    </div>
+                </button>
+            </div>
+             <span style="cursor: pointer;" onclick="$(this).closest('form').submit();">{{movie.0}}</span>
         </form>
+
+        <form action="{% url 'watchlist' %}" method="POST" class="add-watchlist">
+                {% csrf_token %}
+                <input type="hidden" value="{{movie.1}}" name="movie">
+         </form>
+
+        <form action="{% url 'watchlist' %}" method="POST" class="delete-watchlist">
+                {% csrf_token %}
+                <input type="hidden" value="delete{{movie.1}}" name="movie">
+         </form>
 
         <div class="movie-cell genre" style="display: none;"><span class="cell-label">Genre:</span>{{movie.5}}</div>
 
@@ -181,5 +176,18 @@
 {% endblock %}
 
 {% block extra_js %}
+<script>
+$(".watchlist-btn").click(function(){
+    if ($(this).hasClass('added')) {
+        $(this).removeClass('added');
+        $(this).addClass('add');
+        $(this).closest('.movies-row').find('.delete-watchlist').submit();
+    } else {
+        $(this).removeClass('add');
+        $(this).addClass('added');
+        $(this).closest('.movies-row').find('.add-watchlist').submit();
+    }
+});
+</script>
 <script src="{% static 'js/movies-list.js' %}"></script>
 {% endblock extra_js %}

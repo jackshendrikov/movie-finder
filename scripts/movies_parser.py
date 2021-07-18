@@ -9,7 +9,7 @@ ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
 new_movies = open('new_movies.txt', 'r').readlines()
-all_movies = open('movies.csv', 'a', encoding='utf-8')
+all_movies = open('../scripts/movies.csv', 'a', encoding='utf-8')
 ia = IMDb()
 
 for imdb_id in new_movies:
