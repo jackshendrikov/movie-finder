@@ -2,7 +2,7 @@ import csv
 from movies.models import Rate, Genre, Runtime, Type, Netflix, Year, Youtube, Movie
 
 
-fhand = open('movies.csv')
+fhand = open('../movies.csv')
 reader = csv.reader(fhand)
 next(reader)
 

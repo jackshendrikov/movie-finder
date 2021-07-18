@@ -142,4 +142,4 @@ dmypy.json
 media/
 
 # txt files with IMDb ID`s of movies you want to add
-new_movies.txt
+scripts/new_movies.txt
