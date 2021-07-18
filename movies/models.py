@@ -1,4 +1,5 @@
 import uuid
+import datetime
 from django.db import models
 
 
@@ -60,6 +61,7 @@ class Movie(models.Model):
     plot = models.TextField(max_length=300)
     keywords = models.TextField(max_length=150)
     poster = models.CharField(max_length=256)
+    release = models.DateField(default=datetime.date.today)
 
     rating = models.ForeignKey(Rate, on_delete=models.CASCADE)
     genres = models.ForeignKey(Genre, on_delete=models.CASCADE)
