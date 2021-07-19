@@ -215,6 +215,10 @@ $(".watchlist-btn").click(function(){
         $(this).closest('.movies-row').find('.add-watchlist').submit();
     }
 });
+
+document.querySelector(".my-filter").addEventListener("click", function () {
+    document.querySelector(".filter-menu").classList.toggle("active");
+});
 </script>
 <script src="{% static 'js/movies-list.js' %}"></script>
 {% endblock extra_js %}

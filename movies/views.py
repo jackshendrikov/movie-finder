@@ -43,10 +43,10 @@ def register(request):
 
 @login_required
 def watchlist(request):
-    movie = request.POST.get('movie')
     my_watchlist = get_watchlist(request)
 
     if request.method == 'POST':
+        movie = request.POST.get('movie')
         if movie[:6] != "delete":
             if movie not in my_watchlist:
                 add_movie = Watchlist(movie=movie, author=request.user)
@@ -62,9 +62,9 @@ def watchlist(request):
             delete_movie.delete()
             return redirect(request.META['HTTP_REFERER'])
 
-    movies = pd.read_csv('movies.csv')
-    df_user_watchlist = movies.set_index('title').loc[my_watchlist].reset_index(inplace=False)
-    user_watchlist = df_user_watchlist.values.tolist()[::-1]
+    user_watchlist = [all_movies.get(title=val) for val in my_watchlist]
+
+    print(user_watchlist)
 
     page = request.GET.get('page', 1)
     paginator_watchlist = Paginator(user_watchlist, 15)

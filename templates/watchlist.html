@@ -85,7 +85,7 @@
     <div class="movies-row">
         <form action="{% url 'result' %}" method="POST" class="movie-cell poster" style="text-align: center;">
             {% csrf_token %}
-            <input type="hidden" value="{{movie.0}}" name="movie">
+            <input type="hidden" value="{{movie.1}}" name="movie">
             <div style="position: relative;">
                 <input type="image" src="{{movie.14}}" alt="movie" onclick="$(this).closest('form').submit();">
                 <button type="button" class="watchlist-btn {% if movie.1 in myWatchlist %}added{% else %}add{% endif %}">
@@ -95,7 +95,7 @@
                     </div>
                 </button>
             </div>
-             <span style="cursor: pointer;" onclick="$(this).closest('form').submit();">{{movie.0}}</span>
+             <span style="cursor: pointer;" onclick="$(this).closest('form').submit();">{{movie.1}}</span>
         </form>
 
         <form action="{% url 'watchlist' %}" method="POST" class="add-watchlist">
@@ -134,7 +134,7 @@
         <div class="movie-cell watchlist" style="display: none;"><span class="cell-label">Remove from Watchlist:</span>
             <form action="{% url 'watchlist' %}" method="POST">
                 {% csrf_token %}
-                <input type="hidden" value="delete{{movie.0}}" name="movie" id="my_title">
+                <input type="hidden" value="delete{{movie.1}}" name="movie" id="my_title">
                 <button class="action-button" type="submit" style="background-color: #f44336;">
                     <i class="fa fa-times"></i>
                 </button>

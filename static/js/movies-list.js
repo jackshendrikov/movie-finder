@@ -1,7 +1,3 @@
-document.querySelector(".my-filter").addEventListener("click", function () {
-    document.querySelector(".filter-menu").classList.toggle("active");
-});
-
 document.querySelector(".grid").addEventListener("click", function () {
     document.querySelector(".list").classList.remove("active");
     document.querySelector(".grid").classList.add("active");
