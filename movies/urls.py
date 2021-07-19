@@ -14,6 +14,7 @@ urlpatterns = [
     path('genres', TemplateView.as_view(template_name='genres.html'), name='genres'),
     path('watchlist/', views.watchlist, name="watchlist"),
     path('genre', views.genre, name='genre'),
+    path('popular', views.popular, name='popular'),
 
     # path('all', views.all_movies, name='all'),
     path('series/', views.all_series, name='series'),

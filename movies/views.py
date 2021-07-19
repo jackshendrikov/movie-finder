@@ -1,7 +1,10 @@
 import difflib
+import json
 import pandas as pd
+from urllib.request import urlopen
 
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -333,3 +336,19 @@ def movie_search(request):
         movie_items = False
 
     return render(request, "special-item.html", {'movieItems': movie_items, 'myWatchlist': my_watchlist})
+
+
+def popular(request):
+    my_watchlist = get_watchlist(request)
+    # popular_url = 'https://s3.amazonaws.com/popular-movies/movies.json'
+    # movies = json.loads(urlopen(popular_url).read().decode())
+    # popular_movies = []
+    #
+    # for movie in movies:
+    #     try:
+    #         popular_movies.append(all_movies.get(title=movie['title']))
+    #     except ObjectDoesNotExist:
+    #         pass
+    popular_movies = list(all_movies.order_by('-release'))[:30]
+
+    return render(request, "special-item.html", {'movieItems': popular_movies, 'myWatchlist': my_watchlist})
