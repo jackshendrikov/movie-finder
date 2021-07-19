@@ -11,10 +11,10 @@ urlpatterns = [
     path('register/', views.register, name='register'),
 
     path('specials/', TemplateView.as_view(template_name='specials.html'), name='specials'),
-    path('genres', TemplateView.as_view(template_name='genres.html'), name='genres'),
+    path('genres/', TemplateView.as_view(template_name='genres.html'), name='genres'),
     path('watchlist/', views.watchlist, name="watchlist"),
-    path('genre', views.genre, name='genre'),
-    path('popular', views.popular, name='popular'),
+    path('genre/', views.genre, name='genre'),
+    path('popular/', views.popular, name='popular'),
 
     # path('all', views.all_movies, name='all'),
     path('series/', views.all_series, name='series'),
@@ -25,5 +25,5 @@ urlpatterns = [
     path('advsearch/', views.advanced_search, name='advanced-search'),
 
     path('intro/', views.show_intro, name='show-intro'),
-    path('movie-info/', views.result_page, name='result'),
+    path('movie-info/<str:movie_id>/', views.result_page, name='result'),
 ]

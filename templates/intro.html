@@ -9,7 +9,7 @@
     <link rel="stylesheet"  href="{% static 'css/intro.css' %}">
 </head>
 <body>
-<form action="{% url 'result' %}" method="POST" style="display: none;">
+<form action="{% url 'result' imdb %}" method="POST" style="display: none;">
     {% csrf_token %}
     <input type="hidden" value="{{ title }}" name="movie">
     <input type="hidden" value="noIntro" name="intro">

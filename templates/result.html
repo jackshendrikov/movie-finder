@@ -100,6 +100,7 @@
 
             <form id="add-review" class='movie-card-review-button' action="{% url 'review' %}" method="GET">
                  <input type="hidden" value="{{ title }}" name="movie">
+                 <input type="hidden" value="{{ imdb_id }}" name="imdb">
                  <span onclick="$('#add-review').submit();">
                     <i class="fa fa-comment" aria-hidden="true"></i>
                     &nbsp;ADD REVIEW
@@ -111,7 +112,7 @@
 
 <div class="reviews-card">
     <div class="reviews-list">
-        <div class="title">"{{ movie }}" Reviews &#160;<i class="fa fa-film" aria-hidden="true" style="color: #FFBC0B"></i></div>
+        <div class="title">"{{ title }}" Reviews &#160;<i class="fa fa-film" aria-hidden="true" style="color: #FFBC0B"></i></div>
         {% if reviews %}
             {% for review in reviews %}
         <div class="review-card">

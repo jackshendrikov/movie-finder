@@ -118,8 +118,9 @@
                     {% endif %}
 
                     <div id="mobBtn" style="width: 100%; text-align: center;">
-                        <a class="auth-button" style="margin-right: 20px;" href="{% url 'genres' %}">Genres</a>
-                        <a class="auth-button" href="{% url 'specials' %}">Specials</a>
+                        <a class="auth-button" style="margin-right: 10px;" href="{% url 'genres' %}">Genres</a>
+                        <a class="auth-button" style="margin-right: 10px;" href="{% url 'specials' %}">Specials</a>
+                        <a class="auth-button" href="{% url 'popular' %}">Popular</a>
                     </div>
 
                     {% block content %}{% endblock %}

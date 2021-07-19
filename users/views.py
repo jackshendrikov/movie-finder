@@ -3,9 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import (ListView, DetailView,  UpdateView, DeleteView)
+from django.shortcuts import render
+from django.views.generic import (ListView,  UpdateView, DeleteView)
 
 from .forms import ReviewForms
 from .models import Review
@@ -14,7 +13,8 @@ from .models import Review
 @login_required
 def fill_form(request):
     movie_selected = request.GET.get('movie', 'notSelected')
-    if movie_selected == 'notSelected':
+    imdb = request.GET.get('imdb', 'notSelected')
+    if movie_selected == 'notSelected' or imdb == 'notSelected':
         messages.warning(request, f'URL Not Allowed. Select the movie first!')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -23,15 +23,17 @@ def fill_form(request):
         if form.is_valid():
             form.instance.author = request.user
             form.instance.movie = movie_selected
+            form.instance.imdb = imdb
             msg = f'Added review for "{movie_selected}"'
             form.save()
-            return render(request, 'review.html', {'form': form, 'msg': msg, 'movie': movie_selected, 'back': True})
+            return render(request, 'review.html', {'form': form, 'msg': msg, 'movie': movie_selected, 'imdb': imdb,
+                                                   'back': True})
         else:
             print(form.errors)
     else:
         form = ReviewForms()
 
-    params = {'form': form, 'movie': movie_selected, 'back': False}
+    params = {'form': form, 'movie': movie_selected, 'imdb': imdb, 'back': False}
     return render(request, 'review.html', params)
 
 

@@ -83,7 +83,7 @@
 
     {% for movie in userWatchlist %}
     <div class="movies-row">
-        <form action="{% url 'result' %}" method="POST" class="movie-cell poster" style="text-align: center;">
+        <form action="{% url 'result' movie.0 %}" method="POST" class="movie-cell poster" style="text-align: center;">
             {% csrf_token %}
             <input type="hidden" value="{{movie.1}}" name="movie">
             <div style="position: relative;">

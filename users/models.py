@@ -8,6 +8,7 @@ class Review(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=1, default=5.0)
     review_description = models.TextField(default="")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    imdb = models.CharField(max_length=100, null=True)
     timestamp = models.DateTimeField()
 
     def __str__(self):
@@ -26,6 +27,3 @@ class Watchlist(models.Model):
 
     def __str__(self):
         return self.movie + " - " + self.author.username
-
-
-

@@ -180,7 +180,7 @@
         </form>
     </form>
 </div>
-<form action="{% url 'result' %}" method="POST" id="showInfo">
+<form action="{% url 'result' imdb %}" method="POST" id="showInfo">
     {% csrf_token %}
     <input type="hidden" value="{{ movie }}" name="movie">
     <input type="hidden" value="{{ msg }}" name="msg">

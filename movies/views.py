@@ -5,7 +5,7 @@ from urllib.request import urlopen
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -262,17 +262,19 @@ def show_intro(request):
     title = request.POST.get('title', 'False')
 
     if youtube != 'False' and title != 'False':
-        return render(request, "intro.html", {'youtube': "https://www.youtube.com/watch?v=" + youtube, 'title': title})
+        imdb = all_movies.get(title=title)[0]
+        return render(request, "intro.html", {'youtube': "https://www.youtube.com/watch?v=" + youtube, 'title': title,
+                                              'imdb': imdb})
     else:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def result_page(request):
+def result_page(request, movie_id: str):
     movie = request.POST.get('movie', False)
     intro = request.POST.get('intro', False)
     msg = request.POST.get('msg', False)
-    if movie:
-        search = list(all_movies.get(title=movie))
+    if movie or movie_id:
+        search = list(all_movies.get(imdb_id=movie_id))
 
         imdb_id = search[0].strip()
         title = search[1].strip()
