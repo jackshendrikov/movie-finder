@@ -6,12 +6,9 @@ from django.db import models
 class Rate(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=1, null=True, blank=True)
 
-    def __str__(self):
-        return self.rating
-
 
 class Genre(models.Model):
-    genres = models.CharField(max_length=256)
+    genres = models.TextField()
 
     def __str__(self):
         return self.genres
@@ -19,9 +16,6 @@ class Genre(models.Model):
 
 class Runtime(models.Model):
     runtime = models.IntegerField(null=True)
-
-    def __str__(self):
-        return self.runtime
 
 
 class Type(models.Model):
@@ -32,7 +26,7 @@ class Type(models.Model):
 
 
 class Netflix(models.Model):
-    netflix = models.CharField(max_length=256)
+    netflix = models.TextField()
 
     def __str__(self):
         return self.netflix
@@ -41,12 +35,9 @@ class Netflix(models.Model):
 class Year(models.Model):
     year = models.IntegerField(null=True)
 
-    def __str__(self):
-        return self.year
-
 
 class Youtube(models.Model):
-    youtube = models.CharField(max_length=256)
+    youtube = models.TextField()
 
     def __str__(self):
         return self.youtube
@@ -55,12 +46,12 @@ class Youtube(models.Model):
 class Movie(models.Model):
     imdb_id = models.CharField(max_length=128, unique=True, default=uuid.uuid4, primary_key=True)
     title = models.CharField(max_length=256)
-    link = models.CharField(max_length=256)
+    link = models.TextField()
     votes = models.IntegerField(null=True, blank=True)
-    cast = models.TextField(max_length=250)
-    plot = models.TextField(max_length=300)
-    keywords = models.TextField(max_length=150)
-    poster = models.CharField(max_length=256)
+    cast = models.TextField()
+    plot = models.TextField()
+    keywords = models.TextField()
+    poster = models.TextField()
     release = models.DateField(default=datetime.date.today)
 
     rating = models.ForeignKey(Rate, on_delete=models.CASCADE)

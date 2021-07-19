@@ -7,16 +7,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from .models import Movie
 from users.forms import UserRegisterForm
 from users.models import Watchlist
 from users.models import Review
 
 movies = pd.read_csv('movies.csv')
-pd.set_option('display.max_colwidth', None)
 
-dfList = movies.values.tolist()
-dfTop = movies.sort_values(by='rating', ascending=False)[0:100]
-dfTopList = dfTop.values.tolist()
+values = ('imdb_id', 'title', 'rating_id__rating', 'link', 'votes', 'genres_id__genres', 'cast', 'runtime_id__runtime',
+          'mtype_id__mtype', 'netflix_id__netflix', 'plot', 'keywords', 'release', 'year_id__year', 'poster',
+          'youtube_id__youtube')
 
 
 def get_watchlist(request):
@@ -78,7 +78,7 @@ def watchlist(request):
 
 
 def main_page(request):
-    return render(request, 'main-page.html', {'movieList': dfList})
+    return render(request, 'main-page.html')
 
 
 # def all_movies(request):
@@ -87,10 +87,10 @@ def main_page(request):
 
 def all_series(request):
     my_watchlist = get_watchlist(request)
-    dfSeriesList = movies[movies['type'] == 'Series'].values.tolist()
+    series_list = list(Movie.objects.values_list(*values).filter(mtype_id__mtype='Series'))
 
     page = request.GET.get('page', 1)
-    paginator_all_series = Paginator(dfSeriesList, 15)
+    paginator_all_series = Paginator(series_list, 15)
 
     try:
         movie_items = paginator_all_series.page(page)
@@ -104,8 +104,7 @@ def all_series(request):
 
 def netflix(request):
     my_watchlist = get_watchlist(request)
-    netflix_movies = movies[~movies['netflix'].str.contains('None', na=False)].sort_values(by='year', ascending=False)
-    netflix_movies = netflix_movies.values.tolist()
+    netflix_movies = list(Movie.objects.values_list(*values).exclude(netflix_id__netflix='None').order_by('-release'))
 
     page = request.GET.get('page', 1)
     paginator_netflix = Paginator(netflix_movies, 15)
@@ -122,8 +121,10 @@ def netflix(request):
 
 def top_movies(request):
     my_watchlist = get_watchlist(request)
+
+    top_list = list(Movie.objects.values_list(*values).order_by('-rating_id__rating')[:100])
     page = request.GET.get('page', 1)
-    paginator_top_movies = Paginator(dfTopList, 15)
+    paginator_top_movies = Paginator(top_list, 15)
 
     try:
         movie_items = paginator_top_movies.page(page)
@@ -167,24 +168,21 @@ def advanced_search(request):
         if not get_year: get_year = 0
         if not get_rating: get_rating = 0.0
 
+        rating = df_advance['rating']
+        year = df_advance['year']
+        genres = df_advance['genre'].str.contains(get_genre, na=False)
+        cast = df_advance['cast'].str.contains(get_cast, na=False)
+        keywords = df_advance['keywords'].str.contains(get_keywords, na=False)
+
         if sorting == 'byYear':
-            dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
-                                  (df_advance['genre'].str.contains(get_genre, na=False)) &
-                                  (df_advance['cast'].str.contains(get_cast, na=False)) &
-                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='year',
-                                                                                                             ascending=False)
+            dfSelect = df_advance[(rating >= float(get_rating)) & (year >= int(get_year)) &
+                                  genres & cast & keywords].sort_values(by='year', ascending=False)
         elif sorting == 'byVotes':
-            dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
-                                  (df_advance['genre'].str.contains(get_genre, na=False)) &
-                                  (df_advance['cast'].str.contains(get_cast, na=False)) &
-                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(by='votes',
-                                                                                                             ascending=False)
+            dfSelect = df_advance[(rating >= float(get_rating)) & (year >= int(get_year)) &
+                                  genres & cast & keywords].sort_values(by='votes', ascending=False)
         else:
-            dfSelect = df_advance[(df_advance['rating'] >= float(get_rating)) & (df_advance['year'] >= int(get_year)) &
-                                  (df_advance['genre'].str.contains(get_genre, na=False)) &
-                                  (df_advance['cast'].str.contains(get_cast, na=False)) &
-                                  (df_advance['keywords'].str.contains(get_keywords, na=False))].sort_values(
-                by='rating', ascending=False)
+            dfSelect = df_advance[(rating >= float(get_rating)) & (year >= int(get_year)) &
+                                  genres & cast & keywords].sort_values(by='rating', ascending=False)
 
         dfSelect = dfSelect.values.tolist()
         if get_genre == '': get_genre = 'All'
@@ -228,10 +226,10 @@ def genre(request):
     my_watchlist = get_watchlist(request)
     genre_type = request.GET.get('typeGenre', 'False')
 
-    movie_genre = [movies.iloc[i].values.tolist() for i in range(0, len(movies)) if genre_type in movies["genre"][i]]
+    movie_genre = [movies.iloc[i].values.tolist() for i in range(0, Movie.objects.count()) if genre_type in movies["genre"][i]]
 
     dfByGenre = pd.DataFrame(movie_genre, columns=['imdb_id', 'title', 'rating', 'link', 'votes', 'genre', 'cast',
-                                                   'runtime', 'type', 'netflix', 'plot', 'keywords', 'year', 'poster',
+                                                   'runtime', 'type', 'netflix', 'plot', 'keywords', 'release' , 'year', 'poster',
                                                    'youtube'])
 
     dfTopGenre = dfByGenre.sort_values(by='rating', ascending=False).values.tolist()
@@ -265,28 +263,28 @@ def result_page(request):
     intro = request.POST.get('intro', False)
     msg = request.POST.get('msg', False)
     if movie:
-        search = movies[movies['title'] == movie]
+        search = list(Movie.objects.values_list(*values).get(title=movie))
 
-        imdb_id = search['imdb_id'].to_string(index=False).strip()
-        title = search['title'].to_string(index=False).strip()
-        rating = int(float(search['rating'].to_string(index=False).strip()) * 10)
-        link = search['link'].to_string(index=False).strip()
-        votes = search['votes'].to_string(index=False).strip()
-        genres = search['genre'].to_string(index=False).strip()
+        imdb_id = search[0].strip()
+        title = search[1].strip()
+        rating = int(float(str(search[2]).strip()) * 10)
+        link = search[3].strip()
+        votes = search[4]
+        genres = search[5].strip()
         genres_split = genres.split(',')
-        cast = search['cast'].to_string(index=False).strip()
+        cast = search[6].strip()
         cast_list = cast[2:-2].replace("'", "").split(',')
-        runtime = search['runtime'].to_string(index=False).strip()
-        mType = search['type'].to_string(index=False).strip()
-        netflix = search['netflix'].to_string(index=False).strip()
-        plot = search['plot'].to_string(index=False).strip()
-        poster = search['poster'].to_string(index=False).strip()
-        year = search['year'].to_string(index=False).strip()
+        runtime = search[7]
+        mType = search[8].strip()
+        netflix = search[9].strip()
+        plot = search[10].strip()
+        year = search[13]
+        poster = search[14].strip()
         if intro == 'noIntro':
             youtube = 'None'
             intro = 'Played'
         else:
-            youtube = search['youtube'].to_string(index=False).strip()
+            youtube = search[15].strip()
             intro = 'None'
 
         if msg:
@@ -314,9 +312,7 @@ def movie_search(request):
         movie_items = False
         if ("q" in request.GET) and request.GET["q"].strip():
             query_title = request.GET["q"]
-
-            found_movies = movies[movies['title'].str.contains(query_title, na=False)]
-            found_movies = found_movies.sort_values(by='rating', ascending=False).values.tolist()
+            found_movies = list(Movie.objects.values_list(*values).filter(title__icontains=query_title).order_by('-rating_id__rating'))
 
             page = request.GET.get('page', 1)
             paginator_search = Paginator(found_movies, 10)

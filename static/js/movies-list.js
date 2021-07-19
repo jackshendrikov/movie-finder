@@ -15,6 +15,7 @@ document.querySelector(".grid").addEventListener("click", function () {
     let arrayOfNetflix = document.getElementsByClassName('movie-cell netflix');
     let arrayOfIMDB = document.getElementsByClassName('movie-cell imdb-num');
     let arrayOfWatchlist = document.getElementsByClassName('movie-cell watchlist');
+    let watchBtn = document.getElementsByClassName('watchlist-btn');
 
     let lengthOfArray=arrayOfGenres.length;
 
@@ -26,6 +27,7 @@ document.querySelector(".grid").addEventListener("click", function () {
 
         arrayOfTitles[i].style.textAlign = "center";
         arrayOfRate[i].style.textAlign = "center";
+        watchBtn[i].style.display='block';
     }
 });
 
@@ -42,6 +44,7 @@ document.querySelector(".list").addEventListener("click", function () {
     let arrayOfNetflix = document.getElementsByClassName('movie-cell netflix');
     let arrayOfIMDB = document.getElementsByClassName('movie-cell imdb-num');
     let arrayOfWatchlist = document.getElementsByClassName('movie-cell watchlist');
+    let watchBtn = document.getElementsByClassName('watchlist-btn');
 
     let lengthOfArray=arrayOfGenres.length;
 
@@ -53,5 +56,6 @@ document.querySelector(".list").addEventListener("click", function () {
 
         arrayOfTitles[i].style.textAlign = "initial";
         arrayOfRate[i].style.textAlign = "initial";
+        watchBtn[i].style.display='none';
     }
 });
