@@ -309,7 +309,8 @@ def result_page(request, movie_id: str):
         full_result = {'movie': movie, 'imdb_id': imdb_id, 'title': title, 'rating': rating, 'link': link,
                        'votes': votes, 'genres': genres, 'runtime': runtime, 'mtype': mType, 'netflix': netflix,
                        'plot': plot, 'poster': poster, 'genres_split': genres_split, 'year': year, 'youtube': youtube,
-                       'cast_list': cast_list, 'reviews': reviews, 'reviews_rate': reviews_rate, 'intro': intro}
+                       'cast_list': cast_list, 'reviews': reviews, 'reviews_rate': reviews_rate, 'intro': intro,
+                       'msg': msg}
 
         return render(request, "result.html", full_result)
     else:
