@@ -115,6 +115,13 @@ h1 {
   cursor: pointer;
 }
 
+@media screen and (max-width: 600px) {
+  .dark-light {
+    bottom: 10px;
+    right: 15px;
+  }
+}
+
 .dark-light svg {
   width: 24px;
   flex-shrink: 0;
