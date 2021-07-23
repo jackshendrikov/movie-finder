@@ -352,3 +352,16 @@ def popular(request):
     popular_movies = list(all_movies.order_by('-release'))[:30]
 
     return render(request, "special-item.html", {'movieItems': popular_movies, 'myWatchlist': my_watchlist})
+
+
+def error_403(request, exception=None):
+    return render(request, 'errors/403.html')
+
+
+def error_404(request, exception):
+    return render(request, "errors/404.html", {})
+
+
+def error_500(request, exception=None):
+    return render(request, "errors/500.html", {})
+
