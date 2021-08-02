@@ -62,7 +62,7 @@
     <img class="round" src="{{ user|gravatar:128 }}" alt="user" />
 
     <header>
-		<h2>{{ user.username }}</h2>
+		<h2>{{ user.username|truncatechars:15 }}</h2>
 	</header>
 	<footer>
 		<a href="{% url 'watchlist' %}" class="button my-watchlist"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;My Watchlist</a>
@@ -79,7 +79,7 @@
         <img class="logo-img" src="{% static 'ico/logo.png' %}" alt="logo" onclick="window.location.href='{% url "main-page" %}'"/>
         <div class="header-menu">
             <a class="menu-link" href="{% url 'genres' %}">Genres</a>
-            <a class="menu-link" href="{% url 'specials' %}">Specials</a>
+             <a class="menu-link" id="specials-link" href="{% url 'specials' %}">Specials</a>
             <a class="menu-link" href="{% url 'popular' %}">Popular</a>
             {% if user.is_authenticated %}
             <a class="menu-link" href="{% url 'logout' %}">Log Out</a>
@@ -94,7 +94,7 @@
 
          {% if user.is_authenticated %}
          <label for="modal" class="header-profile" style="cursor: pointer;">
-             {{ user.username }}
+             <span id="username-text">{{ user.username|truncatechars:15 }}</span>
              <img class="profile-img" src="{{ user|gravatar:60 }}" alt="avatar"/>
          </label>
         {% endif %}

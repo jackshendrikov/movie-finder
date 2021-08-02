@@ -4,6 +4,7 @@ import pandas as pd
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -28,14 +29,17 @@ def get_watchlist(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('main_page')
+        return redirect('main-page')
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Created Account for {username}')
-            return redirect('login')
+
+            new_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'], )
+            login(request, new_user)
+
+            messages.success(request, f'Thanks for registering. You are now logged in.')
+            return redirect('main-page')
     else:
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})

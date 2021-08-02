@@ -31,3 +31,7 @@ const toggleButton = document.querySelector('.dark-light');
 toggleButton.addEventListener('click', () => {
     document.body.classList.toggle('light-mode');
 });
+
+$(".alert").delay(3000).slideUp(200, function() {
+    $(this).alert('close');
+});
